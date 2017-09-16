@@ -43,7 +43,6 @@ namespace ScpControl.Shared.Core
     ///     Represents a DualShock button/axis mapping profile.
     /// </summary>
     [DataContract]
-    [KnownType(typeof (Ds3Button))]
     [KnownType(typeof (Ds4Button))]
     [KnownType(typeof (VirtualKeyCode))]
     [KnownType(typeof (MouseButton))]
