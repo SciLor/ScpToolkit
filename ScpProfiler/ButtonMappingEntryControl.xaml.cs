@@ -41,39 +41,23 @@ namespace ScpProfiler
 
         private void CurrentCommandTargetOnCurrentChanged(object sender, EventArgs eventArgs)
         {
-            switch (ButtonProfile.MappingTarget.CommandType)
-            {
-                case CommandType.GamepadButton:
-                    ButtonProfile.MappingTarget.CommandTarget = (Ds3Button) CurrentCommandTargetView.CurrentItem;
-                    break;
-                case CommandType.Keystrokes:
-                    ButtonProfile.MappingTarget.CommandTarget =
-                        (VirtualKeyCode) CurrentCommandTargetView.CurrentItem;
-                    break;
-                case CommandType.MouseButtons:
-                    ButtonProfile.MappingTarget.CommandTarget =
-                        (MouseButton) CurrentCommandTargetView.CurrentItem;
-                    break;
-            }
+            ButtonProfile.MappingTarget = (IMappingTarget)CurrentCommandTargetView.CurrentItem;
         }
 
         private void CurrentCommandTypeOnCurrentChanged(object sender, EventArgs eventArgs)
         {
-            ButtonProfile.MappingTarget.CommandType =
-                (CommandType)
-                    Enum.ToObject(typeof (CommandType), ((EnumMetaData) CurrentCommandTypeView.CurrentItem).Value);
+            ButtonProfile.MappingTarget=
+                (IMappingTarget)
+                    Enum.ToObject(typeof(IMappingTarget), ((EnumMetaData)CurrentCommandTypeView.CurrentItem).Value);
 
-            switch (ButtonProfile.MappingTarget.CommandType)
+            if (ButtonProfile.MappingTarget is Keystrokes)
             {
-                case CommandType.GamepadButton:
-                    CurrentCommandTargetView = new CollectionView(AvailableGamepadButtons);
-                    break;
-                case CommandType.Keystrokes:
-                    CurrentCommandTargetView = new CollectionView(AvailableKeys);
-                    break;
-                case CommandType.MouseButtons:
-                    CurrentCommandTargetView = new CollectionView(AvailableMouseButtons);
-                    break;
+                CurrentCommandTargetView = new CollectionView(AvailableKeys);
+
+            }
+            if (ButtonProfile.MappingTarget is MouseButtons)
+            {
+                CurrentCommandTargetView = new CollectionView(AvailableMouseButtons);
             }
 
             CurrentCommandTargetView.MoveCurrentToFirst();
@@ -103,25 +87,24 @@ namespace ScpProfiler
                     if (ButtonProfile == null) return;
 
                     CurrentCommandTypeView = new CollectionView(AvailableCommandTypes);
-                    CurrentCommandTypeView.MoveCurrentToPosition((int) ButtonProfile.MappingTarget.CommandType);
+                    //CurrentCommandTypeView.MoveCurrentToPosition((int) ButtonProfile.MappingTarget);
 
-                    switch (ButtonProfile.MappingTarget.CommandType)
+                    if (ButtonProfile.MappingTarget is GamepadButton)
                     {
-                        case CommandType.GamepadButton:
-                            CurrentCommandTargetView = new CollectionView(AvailableGamepadButtons);
-                            CurrentCommandTargetView.MoveCurrentTo(ButtonProfile.MappingTarget.CommandTarget);
-                            break;
-                        case CommandType.Keystrokes:
-                            CurrentCommandTargetView = new CollectionView(AvailableKeys);
-                            CurrentCommandTargetView.MoveCurrentTo(
-                                AvailableKeys.FirstOrDefault(
-                                    k => k == ToVirtualKeyCode(ButtonProfile.MappingTarget.CommandTarget)));
-                            break;
-                            // TODO: implement!
-                        case CommandType.MouseButtons:
-                            CurrentCommandTargetView = new CollectionView(AvailableMouseButtons);
-                            break;
+                        CurrentCommandTargetView.MoveCurrentTo(ButtonProfile.MappingTarget);
                     }
+                    if (ButtonProfile.MappingTarget is Keystrokes)
+                    {
+                        CurrentCommandTargetView.MoveCurrentTo(
+                            AvailableKeys.FirstOrDefault(
+                                k => k == ToVirtualKeyCode(ButtonProfile.MappingTarget)));
+
+                    }
+                    if (ButtonProfile.MappingTarget is MouseButtons)
+                    {
+                        CurrentCommandTargetView = new CollectionView(AvailableMouseButtons);
+                    }
+
 
                     CurrentCommandTypeView.CurrentChanged += CurrentCommandTypeOnCurrentChanged;
                     CurrentCommandTargetView.CurrentChanged += CurrentCommandTargetOnCurrentChanged;
@@ -133,7 +116,7 @@ namespace ScpProfiler
         #region Private static fields
 
         private static readonly IList<EnumMetaData> AvailableCommandTypes =
-            EnumExtensions.GetValuesAndDescriptions(typeof (CommandType)).ToList();
+            EnumExtensions.GetValuesAndDescriptions(typeof (IMappingTarget)).ToList();
 
         private static readonly IList<VirtualKeyCode> AvailableKeys = Enum.GetValues(typeof (VirtualKeyCode))
             .Cast<VirtualKeyCode>()
@@ -148,7 +131,6 @@ namespace ScpProfiler
                         && k != VirtualKeyCode.HANGEUL
                         && k != VirtualKeyCode.HANGUL).ToList();
 
-        private static readonly IList<Ds3Button> AvailableGamepadButtons = Ds3Button.Buttons.ToList();
 
         private static readonly IList<MouseButton> AvailableMouseButtons =
             Enum.GetValues(typeof (MouseButton)).Cast<MouseButton>().ToList();

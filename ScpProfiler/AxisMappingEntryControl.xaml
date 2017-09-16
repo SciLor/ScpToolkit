@@ -8,14 +8,6 @@
              xmlns:core="clr-namespace:ScpControl.Shared.Core;assembly=ScpControl.Shared"
              mc:Ignorable="d"
              MinHeight="48" MinWidth="600" Width="886">
-    <UserControl.Resources>
-        <ObjectDataProvider x:Key="MyCommandTypes" MethodName="GetValuesAndDescriptions"
-                            ObjectType="utilities:EnumExtensions">
-            <ObjectDataProvider.MethodParameters>
-                <x:TypeExtension TypeName="core:CommandType" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>

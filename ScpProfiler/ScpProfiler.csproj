@@ -109,18 +109,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="AxisMappingEntryControl.xaml.cs">
       <DependentUpon>AxisMappingEntryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ButtonMappingViewModel.cs" />
+    <Compile Include="ViewModels\AxisProfileViewModel.cs" />
+    <Compile Include="SourceAxisViewModel.cs" />
+    <Compile Include="ViewModels\ButtonProfileViewModel.cs" />
+    <Compile Include="ViewModels\ButtonTargetsViewModel.cs" />
+    <Compile Include="ViewModels\DeviceViewModel.cs" />
+    <Compile Include="ViewModels\SourceButtonViewModel.cs" />
     <Compile Include="DpadAxisControl.xaml.cs">
       <DependentUpon>DpadAxisControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DualShockProfileViewModel.cs" />
+    <Compile Include="ViewModels\ProfileViewModel.cs" />
+    <Compile Include="ViewModels\ProfileManagerViewModel.cs" />
     <Compile Include="Properties\CommonInfo.cs" />
     <Compile Include="ThumbStickAxisControl.xaml.cs">
       <DependentUpon>ThumbStickAxisControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TouchpadProfileViewModel.cs" />
+    <Compile Include="ViewModels\TargetButtonViewModel.cs" />
     <Page Include="AxisMappingEntryControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

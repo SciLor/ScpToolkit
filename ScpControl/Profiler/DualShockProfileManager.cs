@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using WindowsInput;
 using ScpControl.Database;
 using ScpControl.ScpCore;
 using ScpControl.Shared.Core;
@@ -40,23 +42,7 @@ namespace ScpControl.Profiler
             }
         }
 
-        /// <summary>
-        ///     Feeds the supplied HID report through all loaded mapping profiles.
-        /// </summary>
-        /// <param name="report">The extended HID report.</param>
-        public void PassThroughAllProfiles(ScpHidReport report)
-        {
-            try
-            {
-                foreach (var profile in Profiles.Where(p => p.IsActive))
-                {
-                    profile.Remap(report);
-                }
-            }
-            catch // TODO: remove!
-            {
-            }
-        }
+
 
         /// <summary>
         ///     Stores a new <see cref="DualShockProfile" /> or overwrites an existing one.

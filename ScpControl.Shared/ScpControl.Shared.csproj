@@ -47,6 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DsButtonProfile.cs" />
     <Compile Include="Core\DualShockEnums.cs" />
     <Compile Include="Core\DualShockPadMeta.cs" />
     <Compile Include="Core\DualShockProfile.cs" />

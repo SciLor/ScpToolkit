@@ -16,32 +16,12 @@ namespace ScpProfiler
     /// </summary>
     public partial class AxisMappingEntryControl : UserControl
     {
-        #region Private fields
-
-        private static readonly IEnumerable<VirtualKeyCode> ValidKeys = Enum.GetValues(typeof (VirtualKeyCode))
-            .Cast<VirtualKeyCode>()
-            .Where(k => k != VirtualKeyCode.MODECHANGE
-                        && k != VirtualKeyCode.PACKET
-                        && k != VirtualKeyCode.NONAME
-                        && k != VirtualKeyCode.LBUTTON
-                        && k != VirtualKeyCode.RBUTTON
-                        && k != VirtualKeyCode.MBUTTON
-                        && k != VirtualKeyCode.XBUTTON1
-                        && k != VirtualKeyCode.XBUTTON2
-                        && k != VirtualKeyCode.HANGEUL
-                        && k != VirtualKeyCode.HANGUL);
-
-        #endregion
 
         #region Ctor
 
         public AxisMappingEntryControl()
         {
-            ButtonProfile = new DsButtonProfile();
-
             InitializeComponent();
-
-            TargetCommandComboBox.ItemsSource = ValidKeys;
         }
 
         #endregion
@@ -50,51 +30,11 @@ namespace ScpProfiler
 
         private void TargetTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedItem = (EnumMetaData) ((ComboBox) sender).SelectedItem;
-
-            if (selectedItem == null) return;
-
-            ButtonProfile.MappingTarget.CommandType =
-                ((CommandType) selectedItem.Value);
-
-            if (TargetCommandComboBox == null)
-                return;
-
-            switch (ButtonProfile.MappingTarget.CommandType)
-            {
-                case CommandType.GamepadButton:
-                    TargetCommandComboBox.SelectedItem = ButtonProfile.MappingTarget.CommandTarget;
-                    TargetCommandComboBox.ItemsSource = Ds3Button.Buttons;
-                    break;
-                case CommandType.Keystrokes:
-                    TargetCommandComboBox.ItemsSource = ValidKeys;
-                    break;
-                case CommandType.MouseAxis:
-                    break;
-                case CommandType.MouseButtons:
-                    TargetCommandComboBox.ItemsSource =
-                        Enum.GetValues(typeof (MouseButton)).Cast<MouseButton>();
-                    break;
-            }
         }
 
         private void TargetCommandComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ButtonProfile.MappingTarget.CommandTarget = ((ComboBox) sender).SelectedItem;
         }
-
-        #endregion
-
-        #region Dependency properties
-
-        [DependencyProperty]
-        public ImageSource IconSource { get; set; }
-
-        [DependencyProperty]
-        public string IconToolTip { get; set; }
-
-        [DependencyProperty]
-        public DsButtonProfile ButtonProfile { get; set; }
 
         #endregion
     }

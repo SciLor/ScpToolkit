@@ -115,14 +115,30 @@ namespace HidReport.Core
         /// </summary>
         /// <param name="button">The DualShock button to question.</param>
         /// <returns>True if the button is pressed, false if the button is released.</returns>
-        public IDsButtonState this[ButtonsEnum button] => _buttonStates[button];
+        public IDsButtonState this[ButtonsEnum button]
+        {
+            get
+            {
+                if(_buttonStates.ContainsKey(button))
+                    return _buttonStates[button];
+                return null;
+            }
+        }
 
         /// <summary>
         ///     Gets the axis state of the current packet.
         /// </summary>
         /// <param name="axis">The DualShock axis to question.</param>
         /// <returns>The value of the axis in question.</returns>
-        public IDsAxisStateImmutable this[AxesEnum axis] => _axesStates[axis];
+        public IDsAxisStateImmutable this[AxesEnum axis]
+        {
+            get
+            {
+                if (_axesStates.ContainsKey(axis))
+                    return _axesStates[axis];
+                return null;
+            }
+        }
 
         public bool IsPadActive
         {

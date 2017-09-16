@@ -20,6 +20,7 @@ using ScpControl.Properties;
 using ScpControl.Rx;
 using ScpControl.ScpCore;
 using ScpControl.Shared.Core;
+using ScpControl.Shared.XInput;
 using ScpControl.Sound;
 using ScpControl.Usb;
 using ScpControl.Usb.Ds3;
@@ -564,17 +565,27 @@ namespace ScpControl
         {
             // get current pad ID
             var serial = (int)e.PadId;
-
+            Mapper mapper = new Mapper();
+            IReadOnlyList<DualShockProfile> profiles; 
             if (GlobalConfiguration.Instance.ProfilesEnabled)
             {
-                // pass current report through user profiles
-                DualShockProfileManager.Instance.PassThroughAllProfiles(e);
+                profiles = DualShockProfileManager.Instance.Profiles;
             }
+            else
+            {
+                profiles = new List<DualShockProfile>
+                {
+                    DualShockProfile.DefaultProfile()
+                };
+            }
+            // pass current report through user profiles
+            mapper.PassThroughAllProfiles(e, profiles);
+            XINPUT_GAMEPAD output = mapper.Output;
 
             if (e.PadState == DsState.Connected)
             {
                 // translate current report to Xbox format and send it to bus device
-                XOutputWrapper.Instance.SetState((uint) serial, _scpBus.Parse(e));
+                XOutputWrapper.Instance.SetState((uint) serial, output);
                 
                 // set currently assigned XInput slot
                 Pads[serial].XInputSlot = XOutputWrapper.Instance.GetRealIndex((uint) serial);

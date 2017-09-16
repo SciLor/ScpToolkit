@@ -2,131 +2,125 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.Serialization;
 using WindowsInput;
 using WindowsInput.Native;
+using HidReport.Contract.Core;
 using HidReport.Contract.Enums;
 
 namespace ScpControl.Shared.Core
 {
     /// <summary>
-    ///     Possible mapping target types (keystrokes, mouse movement etc.)
-    /// </summary>
-    public enum CommandType : byte
-    {
-        [Description("Keystrokes")] Keystrokes,
-        [Description("Gamepad buttons")] GamepadButton,
-        [Description("Mouse buttons")] MouseButtons,
-        [Description("Mouse axis")] MouseAxis
-    }
-
-    /// <summary>
     ///     Describes a mapping target.
     /// </summary>
-    [DataContract]
-    [KnownType(typeof (DsButtonMappingTarget))]
-    public class DsButtonMappingTarget
+    public interface IMappingTarget
     {
-        #region Properties
 
-        [DataMember]
-        public CommandType CommandType { get; set; }
+        string Name { get; }
+    }
 
-        [DataMember]
-        public object CommandTarget { get; set; }
+    [DataContract]
+    [KnownType(typeof(GamepadButton))]
+    public class GamepadButton : IMappingTarget
+    {
+        public GamepadButton(X360Button button)
+        {
+            Button = button;
+        }
 
-        #endregion
+        public X360Button Button { get; private set; }
+        public virtual string Name => "Gamepad buttons";
+    }
+    [DataContract]
+    [KnownType(typeof(Keystrokes))]
+    public class Keystrokes : IMappingTarget
+    {
+        public Keystrokes(VirtualKeyCode code)
+        {
+            Code = code;
+        }
+
+        public VirtualKeyCode Code { get; private set; }
+        public virtual string Name => "Keystrokes";
+
+    }
+    [DataContract]
+    [KnownType(typeof(MouseButtons))]
+    public class MouseButtons : IMappingTarget
+    {
+        public MouseButton Button { get; private set; }
+        public virtual string Name => "Mouse buttons";
+    }
+    [DataContract]
+    [KnownType(typeof(MouseAxis))]
+    public class MouseAxis : IMappingTarget
+    {
+        public virtual string Name => "Mouse axis";
     }
 
     /// <summary>
     ///     Represents a DualShock button/axis mapping profile.
     /// </summary>
     [DataContract]
-    [KnownType(typeof (Ds4Button))]
-    [KnownType(typeof (VirtualKeyCode))]
-    [KnownType(typeof (MouseButton))]
+    [KnownType(typeof(VirtualKeyCode))]
+    [KnownType(typeof(MouseButton))]
     [DisplayName("DualShock Profile")]
     public class DualShockProfile
     {
         #region Ctor
 
+        public static DualShockProfile DefaultProfile()
+        {
+
+            return new DualShockProfile()
+            {
+                IsActive = true,
+                Match = DsMatch.Global,
+                Id = Guid.NewGuid(),
+                Name = "Default profile",
+                Buttons = new List<DsButtonProfile>
+                {
+                    new DsButtonProfile(ButtonsEnum.Ps      , new GamepadButton(X360Button.Guide)),
+                    new DsButtonProfile(ButtonsEnum.Circle  , new GamepadButton(X360Button.B)),
+                    new DsButtonProfile(ButtonsEnum.Cross   , new GamepadButton(X360Button.A)),
+                    new DsButtonProfile(ButtonsEnum.Square  , new GamepadButton(X360Button.X)),
+                    new DsButtonProfile(ButtonsEnum.Triangle, new GamepadButton(X360Button.Y)),
+                    new DsButtonProfile(ButtonsEnum.L1      , new GamepadButton(X360Button.LB)),
+                    new DsButtonProfile(ButtonsEnum.R1      , new GamepadButton(X360Button.RB)),
+                    //new DsButtonProfile(ButtonsEnum.L2      , new GamepadButton(X360Button.Start)),
+                    //new DsButtonProfile(ButtonsEnum.R2      , new GamepadButton(X360Button.Start)),
+                    new DsButtonProfile(ButtonsEnum.L3      , new GamepadButton(X360Button.LS)),
+                    new DsButtonProfile(ButtonsEnum.R3      , new GamepadButton(X360Button.RS)),
+                    new DsButtonProfile(ButtonsEnum.Up      , new GamepadButton(X360Button.Up)),
+                    new DsButtonProfile(ButtonsEnum.Right   , new GamepadButton(X360Button.Right)),
+                    new DsButtonProfile(ButtonsEnum.Down    , new GamepadButton(X360Button.Down)),
+                    new DsButtonProfile(ButtonsEnum.Left    , new GamepadButton(X360Button.Left)),
+                    new DsButtonProfile(ButtonsEnum.Share   , new GamepadButton(X360Button.Back)),
+                    new DsButtonProfile(ButtonsEnum.Options , new GamepadButton(X360Button.Start)),
+                    new DsButtonProfile(ButtonsEnum.Select , new GamepadButton(X360Button.Back)),
+                    new DsButtonProfile(ButtonsEnum.Start , new GamepadButton(X360Button.Start)),
+                }
+            };
+        }
+
         public DualShockProfile()
         {
             Id = Guid.NewGuid();
             Name = "New Profile";
-
-            OnCreated();
         }
 
         [OnDeserializing]
         private void OnDeserializing(StreamingContext c)
         {
-            OnCreated();
         }
 
-        /// <summary>
-        ///     Initialize buttons/axes.
-        /// </summary>
-        private void OnCreated()
-        {
-            Ps            = new DsButtonProfile(ButtonsEnum.Ps);
-            Circle        = new DsButtonProfile(ButtonsEnum.Circle);
-            Cross         = new DsButtonProfile(ButtonsEnum.Cross);
-            Square        = new DsButtonProfile(ButtonsEnum.Square);
-            Triangle      = new DsButtonProfile(ButtonsEnum.Triangle);
-            Select        = new DsButtonProfile(ButtonsEnum.Share);
-            Start         = new DsButtonProfile(ButtonsEnum.Options);
-            LeftShoulder  = new DsButtonProfile(ButtonsEnum.L1);
-            RightShoulder = new DsButtonProfile(ButtonsEnum.R1);
-            LeftTrigger   = new DsButtonProfile(ButtonsEnum.L2);
-            RightTrigger  = new DsButtonProfile(ButtonsEnum.R2);
-            LeftThumb     = new DsButtonProfile(ButtonsEnum.L3);
-            RightThumb    = new DsButtonProfile(ButtonsEnum.R3);
-
-            // D-Pad
-            Up            = new DsButtonProfile(ButtonsEnum.Up);
-            Right         = new DsButtonProfile(ButtonsEnum.Right);
-            Down          = new DsButtonProfile(ButtonsEnum.Down);
-            Left          = new DsButtonProfile(ButtonsEnum.Left);
-        }
+        [DataMemberAttribute]
+        [Browsable(false)]
+        public List<DsButtonProfile> Buttons { get; set; }
 
         #endregion
 
         #region Public methods
-
-        /// <summary>
-        ///     Applies button re-mapping to the supplied report.
-        /// </summary>
-        /// <param name="report">The report to manipulate.</param>
-        public void Remap(ScpHidReport report)
-        {
-            // determine if profile should be applied
-            switch (Match)
-            {
-                case DsMatch.Global:
-                    // always apply
-                    break;
-                case DsMatch.Mac:
-                    // applies of MAC address matches
-                    var reportMac = report.PadMacAddress.ToString();
-                    if (string.CompareOrdinal(MacAddress.Replace(":", string.Empty), reportMac) != 0) return;
-                    break;
-                case DsMatch.None:
-                    // never apply
-                    return;
-                case DsMatch.Pad:
-                    // applies if pad IDs match
-                    if (PadId != report.PadId) return;
-                    break;
-            }
-
-            // walk through all buttons
-            foreach (var buttonProfile in Buttons)
-            {
-                buttonProfile.Remap(report);
-            }
-        }
 
         public override bool Equals(object obj)
         {
@@ -185,212 +179,6 @@ namespace ScpControl.Shared.Core
         [Category("Main")]
         [DisplayName("Match profile on")]
         public DsMatch Match { get; set; }
-
-        [Browsable(false)]
-        private IEnumerable<DsButtonProfile> Buttons
-        {
-            get
-            {
-                var props = GetType().GetProperties().Where(pi => pi.PropertyType == typeof (DsButtonProfile));
-
-                return props.Select(b => b.GetValue(this)).Cast<DsButtonProfile>();
-            }
-        }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Ps { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Circle { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Cross { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Square { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Triangle { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Select { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Start { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile LeftShoulder { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile RightShoulder { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile LeftTrigger { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile RightTrigger { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile LeftThumb { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile RightThumb { get; set; }
-
-        // D-Pad
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Up { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Right { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Down { get; set; }
-
-        [DataMember]
-        [Browsable(false)]
-        public DsButtonProfile Left { get; set; }
-
-        #endregion
-    }
-
-    /// <summary>
-    ///     Describes details about individual buttons.
-    /// </summary>
-    [DataContract]
-    public class DsButtonProfile
-    {
-        private static readonly InputSimulator VirtualInput = new InputSimulator();
-        private const uint InputDelay = 100;
-
-        #region Ctor
-
-        public DsButtonProfile()
-        {
-            OnCreated();
-        }
-
-        /// <summary>
-        ///     Creates a new button mapping profile.
-        /// </summary>
-        /// <param name="sources">A list of DualShock buttons which will be affected by this profile.</param>
-        public DsButtonProfile(params ButtonsEnum[] sources) : this()
-        {
-            SourceButtons = sources;
-        }
-
-        #endregion
-
-        #region Public methods
-
-        /// <summary>
-        ///     Applies button re-mapping to the supplied report.
-        /// </summary>
-        /// <param name="report">The report to manipulate.</param>
-        public void Remap(ScpHidReport report)
-        {
-            // skip disabled mapping
-            if (!IsEnabled) return;
-
-            switch (MappingTarget.CommandType)
-            {
-                case CommandType.GamepadButton:
-                    foreach (var button in SourceButtons)
-                    {
-                        // turbo is special, apply first
-                        if (Turbo.IsEnabled)
-                        {
-                            Turbo.ApplyOn(report, button);
-                        }
-
-                        // get target button
-                        IDsButton target = MappingTarget.CommandTarget as Ds3Button;
-                        // if target is no valid button or none, skip setting it
-                        if (target == null) continue;
-
-                        // if it's a DS4, translate button
-                        if (report.Model == DsModel.DS4)
-                        {
-                            target = Ds4Button.Buttons.First(b => b.Name.Equals(target.Name));
-                        }
-
-                        // if original isn't pressed we can ignore
-                        if (!report.HidReport[button].IsPressed) continue;
-
-                        // unset original button
-                        //TODO: zzz rewrite mapper
-                        ((HidReport.Core.HidReport) report.HidReport).Unset(button);
-                        // set new button
-                        //((HidReport.Core.HidReport)report.HidReport).Set(target);
-                    }
-                    break;
-                case CommandType.Keystrokes:
-                    foreach (var button in SourceButtons)
-                    {
-                        var target = (VirtualKeyCode) Enum.ToObject(typeof(VirtualKeyCode), MappingTarget.CommandTarget);
-
-                        if (report.HidReport[button].IsPressed)
-                        {
-                            VirtualInput.Keyboard.KeyDown(target);
-                        }
-                        else
-                        {
-                            VirtualInput.Keyboard.KeyUp(target);
-                        }
-                    }
-                    break;
-            }
-        }
-
-        #endregion
-
-        #region Properties
-
-        [DataMember]
-        private IEnumerable<ButtonsEnum> SourceButtons { get; set; }
-
-        [DataMember]
-        public DsButtonMappingTarget MappingTarget { get; private set; }
-
-        [DataMember]
-        public bool IsEnabled { get; set; }
-
-        [DataMember]
-        public DsButtonProfileTurboSetting Turbo { get; set; }
-
-        public byte CurrentValue { get; set; }
-
-        #endregion
-
-        #region Deserialization
-
-        private void OnCreated()
-        {
-            MappingTarget = new DsButtonMappingTarget();
-            Turbo = new DsButtonProfileTurboSetting();
-        }
-
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext c)
-        {
-            OnCreated();
-        }
-
         #endregion
     }
 
@@ -418,14 +206,10 @@ namespace ScpControl.Shared.Core
         /// </summary>
         /// <param name="report">The HID report to manipulate.</param>
         /// <param name="button">The button to trigger turbo on.</param>
-        public void ApplyOn(ScpHidReport report, ButtonsEnum button)
+        public void ApplyOn(IScpHidReport report, ButtonsEnum button)
         {
-            // button type must match model, madness otherwise!
-            if ((report.Model != DsModel.DS3) &&
-                (report.Model != DsModel.DS4)) return;
-
             // if button got released...
-            if (_isActive && !report.HidReport[button].IsPressed)
+            if (_isActive && !report[button].IsPressed)
             {
                 // ...disable, reset and return
                 _isActive = false;
@@ -436,7 +220,7 @@ namespace ScpControl.Shared.Core
             }
 
             // if turbo is enabled and button is pressed...
-            if (!_isActive && report.HidReport[button].IsPressed)
+            if (!_isActive && report[button].IsPressed)
             {
                 // ...start calculating the activation delay...
                 if (!_delayedFrame.IsRunning) _delayedFrame.Restart();
@@ -450,7 +234,7 @@ namespace ScpControl.Shared.Core
             }
 
             // if the button was released...
-            if (!report.HidReport[button].IsPressed)
+            if (!report[button].IsPressed)
             {
                 // ...restore default states and skip processing
                 _isActive = false;
@@ -461,7 +245,7 @@ namespace ScpControl.Shared.Core
             if (!_engagedFrame.IsRunning) _engagedFrame.Restart();
 
             // ...do not change state while within frame and button is still pressed, then skip
-            if (_engagedFrame.ElapsedMilliseconds < Interval && report.HidReport[button].IsPressed) return;
+            if (_engagedFrame.ElapsedMilliseconds < Interval && report[button].IsPressed) return;
 
             // reset released time frame ("forecefully release") for button
             if (!_releasedFrame.IsRunning) _releasedFrame.Restart();
@@ -470,8 +254,7 @@ namespace ScpControl.Shared.Core
             if (_releasedFrame.ElapsedMilliseconds < Release)
             {
                 // ...re-set the button state to released
-                //TODO: zzz
-                ((HidReport.Core.HidReport) report.HidReport).Unset(button);
+                ((HidReport.Core.HidReport) report).Unset(button);
             }
             else
             {

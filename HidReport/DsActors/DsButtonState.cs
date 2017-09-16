@@ -9,6 +9,11 @@ namespace HidReport.DsActors
     [Serializable]
     public class DsButtonState : IDsButtonState
     {
+
+        public static DsButtonState Default()
+        {
+            return new DsButtonState();
+        }
         #region Properties
 
         /// <summary>

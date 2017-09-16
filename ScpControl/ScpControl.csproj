@@ -136,6 +136,7 @@
     <Compile Include="Driver\XOutputWrapper.cs" />
     <Compile Include="Exceptions\RootHubAlreadyStartedException.cs" />
     <Compile Include="HidParser\HidParsers.cs" />
+    <Compile Include="Mapper.cs" />
     <Compile Include="Profiler\DualShockProfileManager.cs" />
     <Compile Include="Profiler\VirtualMouse.cs" />
     <Compile Include="Properties\CommonInfo.cs" />
