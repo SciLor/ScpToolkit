@@ -1,13 +1,9 @@
 ﻿<Window x:Class="ScpGamepadAnalyzer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:gamepads="clr-namespace:ScpControl.Usb.Gamepads;assembly=ScpControl"
         Title="ScpToolkit Gamepad Analyzer" Height="530" Width="700" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" Initialized="Window_Initialized"
         Background="#FF1B1B1B" Icon="gamepad.ico" Closing="Window_Closing">
-    <Window.Resources>
-        <gamepads:UsbBlankGamepad x:Key="UsbBlankGamepad"/>
-    </Window.Resources>
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

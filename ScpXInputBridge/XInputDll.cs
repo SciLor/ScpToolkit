@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using log4net;
 using Microsoft.Win32;
-using ScpControl.Shared.Win32;
-using ScpControl.Shared.XInput;
+using ScpXInputBridge.Win32;
+using ScpXInputBridge.XInputConstants;
 
 namespace ScpXInputBridge
 {
@@ -43,7 +43,7 @@ namespace ScpXInputBridge
                 AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
                 {
                     var asmName = new AssemblyName(args.Name).Name;
-                    var asmPath = Path.Combine(basePath, string.Format("{0}.dll", asmName));
+                    var asmPath = Path.Combine(basePath, $"{asmName}.dll");
 
                     Log.DebugFormat("Loading assembly {0} from {1}", asmName, asmPath);
 

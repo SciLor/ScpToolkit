@@ -1,15 +1,11 @@
-﻿using PropertyChanged;
-using ScpControl.Utilities;
+﻿using Utilites;
 
 namespace ScpDriverInstaller.View_Models
 {
-    [ImplementPropertyChanged]
     public class InstallationOptionsViewModel
     {
-        public bool IsXbox360DriverNeeded
-        {
-            get { return !(OsInfoHelper.OsParse(OsInfoHelper.OsInfo) >= OsType.Win8); }
-        }
+        //TODO: xbox driver check
+        public bool IsXbox360DriverNeeded => !(OsInfoHelper.OsParse(OsInfoHelper.OsInfo) >= OsType.Win8);
 
         public bool InstallDs3ButtonEnabled { get; set; }
 

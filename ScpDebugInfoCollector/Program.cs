@@ -2,12 +2,11 @@
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using Config;
 using CsvHelper;
 using HidSharp;
-using ScpControl.Driver;
-using ScpControl.ScpCore;
-using ScpControl.Usb.Gamepads;
-using ScpControl.Utilities;
+using NativeLayer.Driver;
+using Utilites;
 
 namespace ScpDebugInfoCollector
 {
@@ -82,8 +81,7 @@ namespace ScpDebugInfoCollector
                 var unixTimestamp = (int) (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
                 var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 var targetArchive = Path.Combine(desktopPath,
-                    string.Format("ScpToolkit_Log-Package_{0}_{1}.zip",
-                        Environment.UserName, unixTimestamp));
+                    $"ScpToolkit_Log-Package_{Environment.UserName}_{unixTimestamp}.zip");
 
                 Console.WriteLine("Creating ZIP-file...");
 

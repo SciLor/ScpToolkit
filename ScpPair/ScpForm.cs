@@ -3,10 +3,8 @@ using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using ScpControl;
-using ScpControl.Shared.Core;
-using ScpControl.Usb.Ds3;
-using ScpControl.Utilities;
+using HidReport.Contract.Enums;
+using NativeBusControl;
 using ScpPair.Properties;
 
 namespace ScpPair
@@ -79,30 +77,28 @@ namespace ScpPair
         {
             try
             {
-                if (m.Msg == ScpDevice.WM_DEVICECHANGE)
+                if (m.Msg == NativeConsts.WM_DEVICECHANGE)
                 {
                     string Path;
-                    ScpDevice.DEV_BROADCAST_HDR hdr;
+                    DEV_BROADCAST_HDR hdr;
                     var Type = m.WParam.ToInt32();
 
-                    hdr =
-                        (ScpDevice.DEV_BROADCAST_HDR)
-                            Marshal.PtrToStructure(m.LParam, typeof (ScpDevice.DEV_BROADCAST_HDR));
+                    hdr = Marshal.PtrToStructure< DEV_BROADCAST_HDR>(m.LParam);
 
-                    if (hdr.dbch_devicetype == ScpDevice.DBT_DEVTYP_DEVICEINTERFACE)
+                    if (hdr.dbch_devicetype == DBT_DEVTYP_DEVICEINTERFACE)
                     {
-                        ScpDevice.DEV_BROADCAST_DEVICEINTERFACE_M deviceInterface;
+                        DEV_BROADCAST_DEVICEINTERFACE_M deviceInterface;
 
                         deviceInterface =
-                            (ScpDevice.DEV_BROADCAST_DEVICEINTERFACE_M)
-                                Marshal.PtrToStructure(m.LParam, typeof (ScpDevice.DEV_BROADCAST_DEVICEINTERFACE_M));
+                            (DEV_BROADCAST_DEVICEINTERFACE_M)
+                                Marshal.PtrToStructure(m.LParam, typeof (DEV_BROADCAST_DEVICEINTERFACE_M));
 
                         Path = new string(deviceInterface.dbcc_name);
                         Path = Path.Substring(0, Path.IndexOf('\0')).ToUpper();
 
                         switch (Type)
                         {
-                            case ScpDevice.DBT_DEVICEARRIVAL:
+                            case WmDeviceChangeEvent.DBT_DEVICEARRIVAL:
 
                                 if (usbDevice.State != DsState.Connected)
                                 {
@@ -113,7 +109,7 @@ namespace ScpPair
                                 }
                                 break;
 
-                            case ScpDevice.DBT_DEVICEREMOVECOMPLETE:
+                            case WmDeviceChangeEvent.DBT_DEVICEREMOVECOMPLETE:
 
                                 if (Path == usbDevice.Path && usbDevice.State == DsState.Connected)
                                 {

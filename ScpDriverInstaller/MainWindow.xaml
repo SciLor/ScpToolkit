@@ -15,257 +15,253 @@
     <Window.Resources>
         <Utilities:BitmapToImageSource x:Key="BitmapToImageSource" />
     </Window.Resources>
+    <Window.DataContext>
+        <viewModels:InstallationOptionsViewModel />
+    </Window.DataContext>
+    <xctk:BusyIndicator IsBusy="False" DisplayAfter="0" x:Name="MainBusyIndicator">
 
-    <Grid x:Name="InstallGrid">
-        <Grid.DataContext>
-            <viewModels:InstallationOptionsViewModel />
-        </Grid.DataContext>
+        <!-- A Wizard! -->
+        <xctk:Wizard FinishButtonClosesWindow="True" Help="Wizard_OnHelp" CancelButtonContent="{x:Static Properties:Resources.Cancel}" BackButtonContent="{x:Static Properties:Resources.Back}" FinishButtonContent="{x:Static Properties:Resources.Finish}" HelpButtonContent="{x:Static Properties:Resources.Help}" NextButtonContent="{x:Static Properties:Resources.Next}">
+            <!-- Welcome page -->
+            <xctk:WizardPage x:Name="IntroPage"
+                                NextPage="{Binding ElementName=DsInstPage}"
+                                Title="{x:Static Properties:Resources.WelcomeTitle}"
+                                Description="{x:Static Properties:Resources.WelcomeDescription}">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10" Text="{x:Static Properties:Resources.WelcomeGreetings}" />
 
-        <xctk:BusyIndicator IsBusy="False" DisplayAfter="0" x:Name="MainBusyIndicator">
-
-            <!-- A Wizard! -->
-            <xctk:Wizard FinishButtonClosesWindow="True" Help="Wizard_OnHelp" CancelButtonContent="{x:Static Properties:Resources.Cancel}" BackButtonContent="{x:Static Properties:Resources.Back}" FinishButtonContent="{x:Static Properties:Resources.Finish}" HelpButtonContent="{x:Static Properties:Resources.Help}" NextButtonContent="{x:Static Properties:Resources.Next}">
-                <!-- Welcome page -->
-                <xctk:WizardPage x:Name="IntroPage"
-                                 NextPage="{Binding ElementName=DsInstPage}"
-                                 Title="{x:Static Properties:Resources.WelcomeTitle}"
-                                 Description="{x:Static Properties:Resources.WelcomeDescription}">
-                    <Grid>
-                        <StackPanel>
-                            <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10" Text="{x:Static Properties:Resources.WelcomeGreetings}" />
-
-                            <!-- Xbox 360 Controller driver -->
-                            <Expander IsExpanded="{Binding Path=IsXbox360DriverNeeded, Mode=OneWay}"
-                                      Header="{x:Static Properties:Resources.Xbox360Driver}">
-                                <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
-                                    <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.Xbox360DriverNeededBeforeLink}" />
-                                    <Hyperlink
-                                        NavigateUri="https://www.microsoft.com/hardware/en-US/d/xbox-360-controller-for-windows"
-                                        RequestNavigate="Hyperlink_OnRequestNavigate">
-                                        <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.Xbox360DriverNeededLink}" />
-                                    </Hyperlink>
-                                    <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.Xbox360DriverNeededAfterLink}" />
-                                    <LineBreak />
-                                    <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.Xbox360DriverNeededInstallBeforeContinuing}" />
-                                </TextBlock>
-                            </Expander>
-                        </StackPanel>
-                    </Grid>
-                </xctk:WizardPage>
-
-                <!-- Controller Installation Page -->
-                <xctk:WizardPage x:Name="DsInstPage" PageType="Interior"
-                                 Title="{x:Static Properties:Resources.DualShockSetupTitle}"
-                                 Description="{x:Static Properties:Resources.DualShockSetupDescription}"
-                                 PreviousPage="{Binding ElementName=IntroPage}"
-                                 NextPage="{Binding ElementName=BthInstPage}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="500" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Row="0" Grid.Column="0">
+                        <!-- Xbox 360 Controller driver -->
+                        <Expander IsExpanded="{Binding Path=IsXbox360DriverNeeded, Mode=OneWay}"
+                                    Header="{x:Static Properties:Resources.Xbox360Driver}">
                             <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.DualShockSetupPleasePlugIn}" />
-                                <LineBreak /><LineBreak />
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupIfNotShowingUp}" />
-                                <LineBreak /><LineBreak />
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupPleaseStartInstall}" />
-                            </TextBlock>
-
-                            <!-- Install button -->
-                            <Button IsEnabled="{Binding Path=InstallDs3ButtonEnabled}"
-                                    Click="InstallDsOnClick" Margin="20,0">
-                                <TextBlock Text="{x:Static Properties:Resources.DualShockSetupStartInstall}" />
-                            </Button>
-                        </StackPanel>
-
-                        <!-- Uninitialized -->
-                        <GroupBox Grid.Row="0" Grid.Column="1"
-                                  Margin="10,0,0,5"
-                                  Header="{x:Static Properties:Resources.DualShockSetupUninitialized}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                                <StackPanel x:Name="DualShockStackPanelHidUsb" />
-                            </ScrollViewer>
-                        </GroupBox>
-
-                        <!-- Initialized -->
-                        <GroupBox Grid.Row="1" Grid.Column="1"
-                                  Margin="10,5,0,0"
-                                  Header="{x:Static Properties:Resources.DualShockSetupInitialized}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                                <StackPanel x:Name="DualShockStackPanelWinUsb" />
-                            </ScrollViewer>
-                        </GroupBox>
-                    </Grid>
-                </xctk:WizardPage>
-
-                <!-- Bluetooth Host Installation Page -->
-                <xctk:WizardPage x:Name="BthInstPage" PageType="Interior"
-                                 Title="{x:Static Properties:Resources.BluetoothSetupTitle}"
-                                 Description="{x:Static Properties:Resources.BluetoothSetupDescription}"
-                                 PreviousPage="{Binding ElementName=DsInstPage}"
-                                 NextPage="{Binding ElementName=VBusInstPage}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="500" />
-                        </Grid.ColumnDefinitions>
-
-                        <!-- Main area -->
-                        <StackPanel Grid.Row="0" Grid.Column="0">
-                            <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.BluetoothSetupPleasePlugIn}" />
-                                <LineBreak /><LineBreak />
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupIfNotShowingUp}" />
-                                <LineBreak /><LineBreak />
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupPleaseStartInstall}" />
-                            </TextBlock>
-
-                            <!-- Install button -->
-                            <Button IsEnabled="{Binding Path=InstallBthButtonEnabled}"
-                                    Click="InstallBthHostOnClick" Margin="20,0">
-                                <TextBlock Text="{x:Static Properties:Resources.BluetoothSetupStartInstall}" />
-                            </Button>
-                        </StackPanel>
-
-                        <!-- Uninitialized -->
-                        <GroupBox Grid.Row="0" Grid.Column="1"
-                                  Margin="10,0,0,5"
-                                  Header="{x:Static Properties:Resources.BluetoothSetupUninitialized}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                                <StackPanel x:Name="BluetoothStackPanelDefault" />
-                            </ScrollViewer>
-                        </GroupBox>
-
-                        <!-- Initialized -->
-                        <GroupBox Grid.Row="1" Grid.Column="1"
-                                  Margin="10,5,0,0"
-                                  Header="{x:Static Properties:Resources.BluetoothSetupInitialized}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                                <StackPanel x:Name="BluetoothStackPanelWinUsb" />
-                            </ScrollViewer>
-                        </GroupBox>
-
-                        <!-- Warning -->
-                        <StackPanel Grid.Row="1" Grid.Column="0">
-                            <!-- You can also use a localized warning picture. Simply put it in ScpDriverInstaller\Images\Warning.$Locale.png and add it to your .resx file as "Warning" -->
-                            <Image Source="{Binding Source={x:Static Properties:Resources.Warning}, Converter={StaticResource BitmapToImageSource}}"  Stretch="UniformToFill" />
-
-                            <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10" Foreground="#FFFF0000"
-                                       FontWeight="Bold" FontSize="14">
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.BluetoothSetupWarningBeforeLink}" />
+                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.Xbox360DriverNeededBeforeLink}" />
                                 <Hyperlink
-                                    NavigateUri="https://github.com/nefarius/ScpToolkit/wiki/Bluetooth-driver-pitfalls"
+                                    NavigateUri="https://www.microsoft.com/hardware/en-US/d/xbox-360-controller-for-windows"
                                     RequestNavigate="Hyperlink_OnRequestNavigate">
-                                    <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.BluetoothSetupWarningLink}" />
+                                    <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.Xbox360DriverNeededLink}" />
                                 </Hyperlink>
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.BluetoothSetupWarningAfterLink}" />
+                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.Xbox360DriverNeededAfterLink}" />
+                                <LineBreak />
+                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.Xbox360DriverNeededInstallBeforeContinuing}" />
                             </TextBlock>
-                        </StackPanel>
-                    </Grid>
-                </xctk:WizardPage>
+                        </Expander>
+                    </StackPanel>
+                </Grid>
+            </xctk:WizardPage>
 
-                <!-- ScpVBus Installation Page -->
-                <xctk:WizardPage x:Name="VBusInstPage" PageType="Interior"
-                                 Title="{x:Static Properties:Resources.VirtualBusSetupTitle}"
-                                 Description="{x:Static Properties:Resources.VirtualBusSetupDescription}"
-                                 PreviousPage="{Binding ElementName=BthInstPage}"
-                                 NextPage="{Binding ElementName=ServiceInstPage}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+            <!-- Controller Installation Page -->
+            <xctk:WizardPage x:Name="DsInstPage" PageType="Interior"
+                                Title="{x:Static Properties:Resources.DualShockSetupTitle}"
+                                Description="{x:Static Properties:Resources.DualShockSetupDescription}"
+                                PreviousPage="{Binding ElementName=IntroPage}"
+                                NextPage="{Binding ElementName=BthInstPage}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="500" />
-                        </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="500" />
+                    </Grid.ColumnDefinitions>
 
-                        <!-- Main area -->
-                        <StackPanel>
-                            <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.VirtualBusSetupWhatWeWillDo}" />
-                                <LineBreak /><LineBreak />
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.VirtualBusSetupIfAlreadyPresent}" />
-                                <LineBreak /><LineBreak />
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupPleaseStartInstall}" />
-                            </TextBlock>
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.DualShockSetupPleasePlugIn}" />
+                            <LineBreak /><LineBreak />
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupIfNotShowingUp}" />
+                            <LineBreak /><LineBreak />
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupPleaseStartInstall}" />
+                        </TextBlock>
 
-                            <!-- Install button -->
-                            <Button Click="InstallVBusOnClick" Margin="20,0">
-                                <TextBlock Text="{x:Static Properties:Resources.VirtualBusSetupStartInstall}" />
-                            </Button>
-                        </StackPanel>
+                        <!-- Install button -->
+                        <Button IsEnabled="{Binding Path=InstallDs3ButtonEnabled}"
+                                Click="InstallDsOnClick" Margin="20,0">
+                            <TextBlock Text="{x:Static Properties:Resources.DualShockSetupStartInstall}" />
+                        </Button>
+                    </StackPanel>
 
-                        <StackPanel Grid.Row="1" Grid.Column="0">
-                            <Image Source="{Binding Source={x:Static Properties:Resources.Warning}, Converter={StaticResource BitmapToImageSource}}" Stretch="UniformToFill" />
+                    <!-- Uninitialized -->
+                    <GroupBox Grid.Row="0" Grid.Column="1"
+                                Margin="10,0,0,5"
+                                Header="{x:Static Properties:Resources.DualShockSetupUninitialized}">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="DualShockStackPanelHidUsb" />
+                        </ScrollViewer>
+                    </GroupBox>
 
-                            <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10" Foreground="#FFFF0000"
-                                       FontWeight="Bold" FontSize="14" Text="{x:Static Properties:Resources.VirtualBusSetupToAvoidRestart}" />
-                        </StackPanel>
-                    </Grid>
-                </xctk:WizardPage>
+                    <!-- Initialized -->
+                    <GroupBox Grid.Row="1" Grid.Column="1"
+                                Margin="10,5,0,0"
+                                Header="{x:Static Properties:Resources.DualShockSetupInitialized}">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="DualShockStackPanelWinUsb" />
+                        </ScrollViewer>
+                    </GroupBox>
+                </Grid>
+            </xctk:WizardPage>
 
-                <!-- Service Installation Page -->
-                <xctk:WizardPage x:Name="ServiceInstPage" PageType="Interior"
-                                 Title="{x:Static Properties:Resources.ServiceSetupTitle}"
-                                 Description="{x:Static Properties:Resources.ServiceSetupDescription}"
-                                 PreviousPage="{Binding ElementName=VBusInstPage}"
-                                 NextPage="{Binding ElementName=LastPage}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+            <!-- Bluetooth Host Installation Page -->
+            <xctk:WizardPage x:Name="BthInstPage" PageType="Interior"
+                                Title="{x:Static Properties:Resources.BluetoothSetupTitle}"
+                                Description="{x:Static Properties:Resources.BluetoothSetupDescription}"
+                                PreviousPage="{Binding ElementName=DsInstPage}"
+                                NextPage="{Binding ElementName=VBusInstPage}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="500" />
-                        </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="500" />
+                    </Grid.ColumnDefinitions>
 
-                        <!-- Main area -->
-                        <StackPanel Grid.Row="0" Grid.Column="0">
-                            <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.ServiceSetupWhyIsItNeeded}" />
-                                <LineBreak /><LineBreak />
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.ServiceSetupIfAlreadyPresent}" />
-                                <LineBreak /><LineBreak />
-                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.ServiceSetupInstallationRequired}" />
-                            </TextBlock>
+                    <!-- Main area -->
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.BluetoothSetupPleasePlugIn}" />
+                            <LineBreak /><LineBreak />
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupIfNotShowingUp}" />
+                            <LineBreak /><LineBreak />
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupPleaseStartInstall}" />
+                        </TextBlock>
 
-                            <!-- Install button -->
-                            <Button Click="InstallWindowsServiceOnClick" Margin="20,0">
-                                <TextBlock Text="{x:Static Properties:Resources.ServiceSetupStartInstall}" />
-                            </Button>
-                        </StackPanel>
-                    </Grid>
-                </xctk:WizardPage>
+                        <!-- Install button -->
+                        <Button IsEnabled="{Binding Path=InstallBthButtonEnabled}"
+                                Click="InstallBthHostOnClick" Margin="20,0">
+                            <TextBlock Text="{x:Static Properties:Resources.BluetoothSetupStartInstall}" />
+                        </Button>
+                    </StackPanel>
 
-                <!-- Last Page -->
-                <xctk:WizardPage x:Name="LastPage" PageType="Interior"
-                                 Title="{x:Static Properties:Resources.FinishedTitle}"
-                                 Description="{x:Static Properties:Resources.FinishedDescription}"
-                                 CanFinish="True">
-                    <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
-                        <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.FinishedThatsIt}" />
-                        <LineBreak /><LineBreak />
-                        <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.FinishedAutoService}" />
-                    </TextBlock>
-                </xctk:WizardPage>
-            </xctk:Wizard>
-        </xctk:BusyIndicator>
-    </Grid>
+                    <!-- Uninitialized -->
+                    <GroupBox Grid.Row="0" Grid.Column="1"
+                                Margin="10,0,0,5"
+                                Header="{x:Static Properties:Resources.BluetoothSetupUninitialized}">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="BluetoothStackPanelDefault" />
+                        </ScrollViewer>
+                    </GroupBox>
+
+                    <!-- Initialized -->
+                    <GroupBox Grid.Row="1" Grid.Column="1"
+                                Margin="10,5,0,0"
+                                Header="{x:Static Properties:Resources.BluetoothSetupInitialized}">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="BluetoothStackPanelWinUsb" />
+                        </ScrollViewer>
+                    </GroupBox>
+
+                    <!-- Warning -->
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <!-- You can also use a localized warning picture. Simply put it in ScpDriverInstaller\Images\Warning.$Locale.png and add it to your .resx file as "Warning" -->
+                        <Image Source="{Binding Source={x:Static Properties:Resources.Warning}, Converter={StaticResource BitmapToImageSource}}"  Stretch="UniformToFill" />
+
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10" Foreground="#FFFF0000"
+                                    FontWeight="Bold" FontSize="14">
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.BluetoothSetupWarningBeforeLink}" />
+                            <Hyperlink
+                                NavigateUri="https://github.com/nefarius/ScpToolkit/wiki/Bluetooth-driver-pitfalls"
+                                RequestNavigate="Hyperlink_OnRequestNavigate">
+                                <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.BluetoothSetupWarningLink}" />
+                            </Hyperlink>
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.BluetoothSetupWarningAfterLink}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </xctk:WizardPage>
+
+            <!-- ScpVBus Installation Page -->
+            <xctk:WizardPage x:Name="VBusInstPage" PageType="Interior"
+                                Title="{x:Static Properties:Resources.VirtualBusSetupTitle}"
+                                Description="{x:Static Properties:Resources.VirtualBusSetupDescription}"
+                                PreviousPage="{Binding ElementName=BthInstPage}"
+                                NextPage="{Binding ElementName=ServiceInstPage}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="500" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Main area -->
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.VirtualBusSetupWhatWeWillDo}" />
+                            <LineBreak /><LineBreak />
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.VirtualBusSetupIfAlreadyPresent}" />
+                            <LineBreak /><LineBreak />
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.SetupPleaseStartInstall}" />
+                        </TextBlock>
+
+                        <!-- Install button -->
+                        <Button Click="InstallVBusOnClick" Margin="20,0">
+                            <TextBlock Text="{x:Static Properties:Resources.VirtualBusSetupStartInstall}" />
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <Image Source="{Binding Source={x:Static Properties:Resources.Warning}, Converter={StaticResource BitmapToImageSource}}" Stretch="UniformToFill" />
+
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10" Foreground="#FFFF0000"
+                                    FontWeight="Bold" FontSize="14" Text="{x:Static Properties:Resources.VirtualBusSetupToAvoidRestart}" />
+                    </StackPanel>
+                </Grid>
+            </xctk:WizardPage>
+
+            <!-- Service Installation Page -->
+            <xctk:WizardPage x:Name="ServiceInstPage" PageType="Interior"
+                                Title="{x:Static Properties:Resources.ServiceSetupTitle}"
+                                Description="{x:Static Properties:Resources.ServiceSetupDescription}"
+                                PreviousPage="{Binding ElementName=VBusInstPage}"
+                                NextPage="{Binding ElementName=LastPage}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="500" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Main area -->
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.ServiceSetupWhyIsItNeeded}" />
+                            <LineBreak /><LineBreak />
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.ServiceSetupIfAlreadyPresent}" />
+                            <LineBreak /><LineBreak />
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.ServiceSetupInstallationRequired}" />
+                        </TextBlock>
+
+                        <!-- Install button -->
+                        <Button Click="InstallWindowsServiceOnClick" Margin="20,0">
+                            <TextBlock Text="{x:Static Properties:Resources.ServiceSetupStartInstall}" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </xctk:WizardPage>
+
+            <!-- Last Page -->
+            <xctk:WizardPage x:Name="LastPage" PageType="Interior"
+                                Title="{x:Static Properties:Resources.FinishedTitle}"
+                                Description="{x:Static Properties:Resources.FinishedDescription}"
+                                CanFinish="True">
+                <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Margin="10">
+                    <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.FinishedThatsIt}" />
+                    <LineBreak /><LineBreak />
+                    <TextBlock TextWrapping="Wrap" Text="{x:Static Properties:Resources.FinishedAutoService}" />
+                </TextBlock>
+            </xctk:WizardPage>
+        </xctk:Wizard>
+    </xctk:BusyIndicator>
 </Window>

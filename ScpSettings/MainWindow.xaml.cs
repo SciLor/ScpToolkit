@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using ScpControl;
-using ScpControl.ScpCore;
 
 namespace ScpSettings
 {

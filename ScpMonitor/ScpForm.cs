@@ -6,7 +6,6 @@ using System.Reflection;
 using System.ServiceModel;
 using System.Windows.Forms;
 using log4net;
-using ScpControl.Utilities;
 using ScpMonitor.Properties;
 
 namespace ScpMonitor

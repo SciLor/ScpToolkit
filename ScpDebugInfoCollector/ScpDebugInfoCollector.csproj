@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ScpDebugInfoCollector</RootNamespace>
     <AssemblyName>ScpDebugInfoCollector</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,8 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CsvHelper.2.13.5.0\lib\net40-client\CsvHelper.dll</HintPath>
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="HidSharp">
       <HintPath>..\packages\HidSharp.1.5\lib\net35\HidSharp.dll</HintPath>
@@ -70,9 +70,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ScpControl\ScpControl.csproj">
+    <ProjectReference Include="..\Config\Config.csproj">
+      <Project>{F29D24DC-190D-4560-B920-ECD38395CE2B}</Project>
+      <Name>Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NativeLayer\NativeLayer.csproj">
       <Project>{ddecf06e-be48-4610-8bf8-4ae5140d9f0c}</Project>
-      <Name>ScpControl</Name>
+      <Name>NativeLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilites\Utilites.csproj">
+      <Project>{03C71EB6-F53A-4687-9E54-AD355A6ADCEB}</Project>
+      <Name>Utilites</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -80,7 +88,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>Copy /Y /B "$(SolutionDir)\ScpControl\Properties\CommonInfo.cs" "$(ProjectDir)\Properties\CommonInfo.cs" &gt; nul:</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

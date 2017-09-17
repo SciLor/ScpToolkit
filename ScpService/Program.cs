@@ -44,7 +44,7 @@ namespace ScpService
                 ServiceBase[] ServicesToRun;
                 ServicesToRun = new ServiceBase[]
                 {
-                    new Ds3Service()
+                    new ScpService()
                 };
                 ServiceBase.Run(ServicesToRun);
             }

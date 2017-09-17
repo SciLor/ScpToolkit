@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using ScpControl.Shared.Core;
+using HidReport.Contract.Enums;
 using ScpMonitor.Properties;
 
 namespace ScpMonitor
 {
-    public partial class ProfilesForm : Form
+    public sealed partial class ProfilesForm : Form
     {
         private const String Default = "Default";
-        protected Boolean m_CanEdit, m_Editing, m_CanSave = true, m_PropsActive;
-        protected DualShockPadMeta m_Detail;
-        protected Int32 m_SelectedPad;
-        protected String m_SelectedProfile = Default, m_Active = Default;
+        private Boolean m_CanEdit, m_Editing, m_CanSave = true;
+        private Boolean m_PropsActive;
+        //TODO: private DualShockPadMeta m_Detail;
+        private Int32 m_SelectedPad;
+        private String m_SelectedProfile = Default, m_Active = Default;
 
         public ProfilesForm()
         {
@@ -32,7 +33,7 @@ namespace ScpMonitor
         public void Request()
         {
             cbPad.SelectedIndex = m_SelectedPad = 0;
-            m_Detail = scpProxy.Detail((DsPadId)m_SelectedPad);
+            //TODO: m_Detail = scpProxy.Detail(m_SelectedPad);
 
             ResetControls();
             
@@ -46,7 +47,7 @@ namespace ScpMonitor
             CenterToScreen();
         }
 
-        private void Parse(object sender, ScpHidReport e)
+        private void Parse(object sender, IScpHidReport e)
         {
             lock (this)
             {
@@ -57,74 +58,51 @@ namespace ScpMonitor
                         ResetControls();
                         return;
                     }
+                    //TODO:
+                    axLX.Value = e[AxesEnum.Lx].Value;
+                    axLY.Value = e[AxesEnum.Ly].Value;
+                    axRX.Value = e[AxesEnum.Rx].Value;
+                    axRY.Value = e[AxesEnum.Ry].Value;
 
-                    switch (e.Model)
-                    {
-                        case DsModel.DS3:
-                            {
-                                axLX.Value = e[Ds3Axis.Lx].Value;
-                                axLY.Value = e[Ds3Axis.Ly].Value;
-                                axRX.Value = e[Ds3Axis.Rx].Value;
-                                axRY.Value = e[Ds3Axis.Ry].Value;
+                    axL1.Value = e[AxesEnum.L1].Value;
+                    axR1.Value = e[AxesEnum.R1].Value;
+                    axL2.Value = e[AxesEnum.L2].Value;
+                    axR2.Value = e[AxesEnum.R2].Value;
 
-                                axL1.Value = e[Ds3Axis.L1].Value;
-                                axR1.Value = e[Ds3Axis.R1].Value;
-                                axL2.Value = e[Ds3Axis.L2].Value;
-                                axR2.Value = e[Ds3Axis.R2].Value;
+                    axT.Value = e[AxesEnum.Triangle].Value;
+                    axC.Value = e[AxesEnum.Circle].Value;
+                    axX.Value = e[AxesEnum.Cross].Value;
+                    axS.Value = e[AxesEnum.Square].Value;
 
-                                axL3.Value = (Byte)(e[Ds3Button.L3].IsPressed ? 255 : 0);
-                                axR3.Value = (Byte)(e[Ds3Button.R3].IsPressed ? 255 : 0);
+                    axU.Value = e[AxesEnum.Up].Value;
+                    axR.Value = e[AxesEnum.Right].Value;
+                    axD.Value = e[AxesEnum.Down].Value;
+                    axL.Value = e[AxesEnum.Left].Value;
 
-                                axSH.Value = (Byte)(e[Ds3Button.Select].IsPressed ? 255 : 0);
-                                axOP.Value = (Byte)(e[Ds3Button.Start].IsPressed ? 255 : 0);
+                    axSH.Value = (Byte)(e[ButtonsEnum.Select].IsPressed ? 255 : 0);
+                    axOP.Value = (Byte)(e[ButtonsEnum.Start].IsPressed ? 255 : 0);
 
-                                axT.Value = e[Ds3Axis.Triangle].Value;
-                                axC.Value = e[Ds3Axis.Circle].Value;
-                                axX.Value = e[Ds3Axis.Cross].Value;
-                                axS.Value = e[Ds3Axis.Square].Value;
+                    axPS.Value = (Byte)(e[ButtonsEnum.Ps].IsPressed ? 255 : 0);
 
-                                axU.Value = e[Ds3Axis.Up].Value;
-                                axR.Value = e[Ds3Axis.Right].Value;
-                                axD.Value = e[Ds3Axis.Down].Value;
-                                axL.Value = e[Ds3Axis.Left].Value;
+                    axL1.Value = (Byte)(e[ButtonsEnum.L1].IsPressed ? 255 : 0);
+                    axR1.Value = (Byte)(e[ButtonsEnum.R1].IsPressed ? 255 : 0);
+                    axL3.Value = (Byte)(e[ButtonsEnum.L3].IsPressed ? 255 : 0);
+                    axR3.Value = (Byte)(e[ButtonsEnum.R3].IsPressed ? 255 : 0);
 
-                                axPS.Value = (Byte)(e[Ds3Button.Ps].IsPressed ? 255 : 0);
-                            }
-                            break;
 
-                        case DsModel.DS4:
-                            {
-                                axLX.Value = e[Ds4Axis.Lx].Value;
-                                axLY.Value = e[Ds4Axis.Ly].Value;
-                                axRX.Value = e[Ds4Axis.Rx].Value;
-                                axRY.Value = e[Ds4Axis.Ry].Value;
+                    axT.Value = (Byte)(e[ButtonsEnum.Triangle].IsPressed ? 255 : 0);
+                    axC.Value = (Byte)(e[ButtonsEnum.Circle].IsPressed ? 255 : 0);
+                    axX.Value = (Byte)(e[ButtonsEnum.Cross].IsPressed ? 255 : 0);
+                    axS.Value = (Byte)(e[ButtonsEnum.Square].IsPressed ? 255 : 0);
 
-                                axL2.Value = e[Ds4Axis.L2].Value;
-                                axR2.Value = e[Ds4Axis.R2].Value;
+                    axU.Value = (Byte)(e[ButtonsEnum.Up].IsPressed ? 255 : 0);
+                    axR.Value = (Byte)(e[ButtonsEnum.Right].IsPressed ? 255 : 0);
+                    axD.Value = (Byte)(e[ButtonsEnum.Down].IsPressed ? 255 : 0);
+                    axL.Value = (Byte)(e[ButtonsEnum.Left].IsPressed ? 255 : 0);
 
-                                axL1.Value = (Byte)(e[Ds4Button.L1].IsPressed ? 255 : 0);
-                                axR1.Value = (Byte)(e[Ds4Button.R1].IsPressed ? 255 : 0);
-                                axL3.Value = (Byte)(e[Ds4Button.L3].IsPressed ? 255 : 0);
-                                axR3.Value = (Byte)(e[Ds4Button.R3].IsPressed ? 255 : 0);
-
-                                axSH.Value = (Byte)(e[Ds4Button.Share].IsPressed ? 255 : 0);
-                                axOP.Value = (Byte)(e[Ds4Button.Options].IsPressed ? 255 : 0);
-
-                                axT.Value = (Byte)(e[Ds4Button.Triangle].IsPressed ? 255 : 0);
-                                axC.Value = (Byte)(e[Ds4Button.Circle].IsPressed ? 255 : 0);
-                                axX.Value = (Byte)(e[Ds4Button.Cross].IsPressed ? 255 : 0);
-                                axS.Value = (Byte)(e[Ds4Button.Square].IsPressed ? 255 : 0);
-
-                                axU.Value = (Byte)(e[Ds4Button.Up].IsPressed ? 255 : 0);
-                                axR.Value = (Byte)(e[Ds4Button.Right].IsPressed ? 255 : 0);
-                                axD.Value = (Byte)(e[Ds4Button.Down].IsPressed ? 255 : 0);
-                                axL.Value = (Byte)(e[Ds4Button.Left].IsPressed ? 255 : 0);
-
-                                axPS.Value = (Byte)(e[Ds4Button.Ps].IsPressed ? 255 : 0);
-                                axTP.Value = (Byte)(e[Ds4Button.TouchPad].IsPressed ? 255 : 0);
-                            }
-                            break;
-                    }
+                    axSH.Value = (Byte)(e[ButtonsEnum.Share].IsPressed ? 255 : 0);
+                    axOP.Value = (Byte)(e[ButtonsEnum.Options].IsPressed ? 255 : 0);
+                    axTP.Value = (Byte)(e[ButtonsEnum.Touchpad].IsPressed ? 255 : 0);
                 }
             }
         }
@@ -156,7 +134,7 @@ namespace ScpMonitor
             lock (this)
             {
                 m_SelectedPad = cbPad.SelectedIndex;
-                m_Detail = scpProxy.Detail((DsPadId)m_SelectedPad);
+                //TODO: m_Detail = scpProxy.Detail((DsPadId)m_SelectedPad);
 
                 ResetControls();
             }

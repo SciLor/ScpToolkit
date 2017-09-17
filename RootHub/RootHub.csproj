@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{71EDED79-99C0-452D-BE50-911B2B674367}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RootHub</RootNamespace>
+    <AssemblyName>RootHub</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DBreeze, Version=1.88.2017.630, Culture=neutral, PublicKeyToken=174b57f1c155f3c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\DBreeze.1.88.0\lib\net45\DBreeze.dll</HintPath>
+    </Reference>
+    <Reference Include="HidSharp">
+      <HintPath>..\packages\HidSharp.1.5\lib\net35\HidSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Libarius">
+      <HintPath>..\packages\Libarius.1.14.1\lib\Libarius.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MadMilkman.Ini, Version=1.0.6.0, Culture=neutral, PublicKeyToken=4e0b5157a7ffbb74, processorArchitecture=MSIL">
+      <HintPath>..\packages\MadMilkman.Ini.1.0.6.0\lib\net20\MadMilkman.Ini.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=2.1.3.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.2.1.3\lib\netstandard1.0\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ReactiveSockets">
+      <HintPath>..\packages\ReactiveSockets.0.2.6\lib\net40\ReactiveSockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Trinet.Core.IO.Ntfs, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0aeaaa20a328a46c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Trinet.Core.IO.Ntfs.4.0.0\lib\net35\Trinet.Core.IO.Ntfs.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NativeFeedChannel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RootHub.cs" />
+    <Compile Include="Rx\IChannel.cs" />
+    <Compile Include="Rx\ScpNativeFeedChannel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Config\Config.csproj">
+      <Project>{F29D24DC-190D-4560-B920-ECD38395CE2B}</Project>
+      <Name>Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HidReport\HidReport.csproj">
+      <Project>{DCC3A7CD-B7F3-42F0-B1AB-C55AD82C4593}</Project>
+      <Name>HidReport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapper.Contract\Mapper.Contract.csproj">
+      <Project>{7354F1ED-4EE3-4DD4-B5EC-9A5309FBE52D}</Project>
+      <Name>Mapper.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NativeBusControl\NativeBusControl.csproj">
+      <Project>{32139FCF-31E0-4FFF-AB10-551485451BAA}</Project>
+      <Name>NativeBusControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RootHub.Contract\RootHub.Contract.csproj">
+      <Project>{9885F70D-FFF1-454B-BF8D-D88EE122DF30}</Project>
+      <Name>RootHub.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HidReport.Contract\HidReport.Contract.csproj">
+      <Project>{8d32247f-0fec-4dad-9572-7fc2247e0f21}</Project>
+      <Name>HidReport.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NativeLayer\NativeLayer.csproj">
+      <Project>{DDECF06E-BE48-4610-8BF8-4AE5140D9F0C}</Project>
+      <Name>NativeLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UsbHub\UsbHub.csproj">
+      <Project>{DA6FA575-A32D-4CA6-992C-D45C8EDDBF3C}</Project>
+      <Name>UsbHub</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilites\Utilites.csproj">
+      <Project>{03C71EB6-F53A-4687-9E54-AD355A6ADCEB}</Project>
+      <Name>Utilites</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets" Condition="Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

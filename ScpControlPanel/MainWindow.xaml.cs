@@ -1,7 +1,4 @@
 ﻿using System.Windows;
-using ScpControl.Profiler;
-using ScpControl.ScpCore;
-using ScpControl.Shared.Core;
 using ScpControlPanel.Controls;
 
 namespace ScpControlPanel

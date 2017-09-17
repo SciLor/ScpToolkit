@@ -7,8 +7,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using HidSharp;
+using NativeLayer.ScpBus;
+using NativeLayer.Usb.Gamepads;
 using Ookii.Dialogs.Wpf;
-using ScpControl.Usb.Gamepads;
 
 namespace ScpGamepadAnalyzer
 {
@@ -22,7 +23,7 @@ namespace ScpGamepadAnalyzer
         private readonly SortedList<CaptureType, TaskDialog> _interpreterDiags =
             new SortedList<CaptureType, TaskDialog>();
 
-        private UsbBlankGamepad _device;
+        private UsbHub _hub;
 
         #endregion
 
@@ -81,10 +82,9 @@ namespace ScpGamepadAnalyzer
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            if (_device != null)
+            if (_hub != null)
             {
-                _device.Stop();
-                _device.Close();
+                _hub.Stop();
             }
         }
 
@@ -105,12 +105,13 @@ namespace ScpGamepadAnalyzer
             }
 
             var targetFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                string.Format("{0}_hid-report.dump.txt", SelectedHidDevice.ProductName));
+                $"{SelectedHidDevice.ProductName}_hid-report.dump.txt");
 
-            _device = new UsbBlankGamepad(SelectedHidDevice, SelectedHidDevice.DevicePath,
+            _hub.Devices.Where();
+            _hub = new UsbBlankGamepad(SelectedHidDevice, SelectedHidDevice.DevicePath,
                 targetFile);
 
-            if (_device.Open(SelectedHidDevice.DevicePath) && _device.Start())
+            if (_hub.Open(SelectedHidDevice.DevicePath) && _hub.Start())
             {
                 InterpretButton.IsEnabled = true;
                 CloseButton.IsEnabled = true;
@@ -142,16 +143,16 @@ namespace ScpGamepadAnalyzer
                 var dialog in
                     _interpreterDiags.Where(dialog => dialog.Value.ShowDialog(this).Text.Equals("Capture")))
             {
-                _device.Capture = dialog.Key;
+                _hub.Capture = dialog.Key;
             }
         }
 
         private void CloseDeviceButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (_device != null)
+            if (_hub != null)
             {
-                _device.Stop();
-                _device.Close();
+                _hub.Stop();
+                _hub.Close();
             }
             else
             {

@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using AutoDependencyPropertyMarker;
-using Ookii.Dialogs.Wpf;
 using ColorPickerControls.Dialogs;
 
 namespace ScpSettings.Controls

@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:valueConverters="clr-namespace:ScpControl.Value_Converters;assembly=ScpControl"
+             xmlns:scpControlPanel="clr-namespace:ScpControlPanel"
              mc:Ignorable="d" Height="48" Width="700" MinHeight="48" MinWidth="700"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <UserControl.Resources>
-        <valueConverters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+        <scpControlPanel:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </UserControl.Resources>
 
     <UserControl.ContextMenu>

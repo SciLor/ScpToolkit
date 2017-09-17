@@ -2,9 +2,7 @@
 using System.Collections.Specialized;
 using System.Windows.Controls;
 using AutoDependencyPropertyMarker;
-using ScpControl.Profiler;
-using ScpControl.ScpCore;
-using ScpControl.Shared.Core;
+using HidReport.Contract.Enums;
 
 namespace ScpControlPanel.Controls
 {

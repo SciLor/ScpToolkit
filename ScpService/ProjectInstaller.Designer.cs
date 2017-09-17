@@ -40,7 +40,7 @@
             // serviceInstaller
             // 
             this.serviceInstaller.DisplayName = "SCP DSx Service";
-            this.serviceInstaller.ServiceName = "Ds3Service";
+            this.serviceInstaller.ServiceName = "ScpService";
             this.serviceInstaller.ServicesDependedOn = new string[] {
         "ScpVBus"};
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;

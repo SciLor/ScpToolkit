@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ScpService</RootNamespace>
     <AssemblyName>ScpService</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -57,25 +57,24 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DBreeze, Version=1.73.2016.108, Culture=neutral, PublicKeyToken=174b57f1c155f3c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\DBreeze.1.73.0\lib\net45\DBreeze.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DBreeze, Version=1.88.2017.630, Culture=neutral, PublicKeyToken=174b57f1c155f3c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\DBreeze.1.88.0\lib\net45\DBreeze.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\CommonInfo.cs" />
-    <Compile Include="Ds3Service.cs">
+    <Compile Include="ScpService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Ds3Service.Designer.cs">
-      <DependentUpon>Ds3Service.cs</DependentUpon>
+    <Compile Include="ScpService.Designer.cs">
+      <DependentUpon>ScpService.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -90,21 +89,39 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="WcfService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ScpControl.Shared\ScpControl.Shared.csproj">
+    <ProjectReference Include="..\Config\Config.csproj">
+      <Project>{F29D24DC-190D-4560-B920-ECD38395CE2B}</Project>
+      <Name>Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NativeBusControl\NativeBusControl.csproj">
+      <Project>{32139FCF-31E0-4FFF-AB10-551485451BAA}</Project>
+      <Name>NativeBusControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RootHub.Contract\RootHub.Contract.csproj">
+      <Project>{9885F70D-FFF1-454B-BF8D-D88EE122DF30}</Project>
+      <Name>RootHub.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RootHub\RootHub.csproj">
+      <Project>{71EDED79-99C0-452D-BE50-911B2B674367}</Project>
+      <Name>RootHub</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HidReport.Contract\HidReport.Contract.csproj">
+      <Project>{8D32247F-0FEC-4DAD-9572-7FC2247E0F21}</Project>
+      <Name>HidReport.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HidReport\HidReport.csproj">
       <Project>{dcc3a7cd-b7f3-42f0-b1ab-c55ad82c4593}</Project>
-      <Name>ScpControl.Shared</Name>
+      <Name>HidReport</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ScpControl\ScpControl.csproj">
+    <ProjectReference Include="..\NativeLayer\NativeLayer.csproj">
       <Project>{DDECF06E-BE48-4610-8BF8-4AE5140D9F0C}</Project>
-      <Name>ScpControl</Name>
+      <Name>NativeLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Ds3Service.resx">
-      <DependentUpon>Ds3Service.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,7 +140,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>Copy /Y /B "$(SolutionDir)\ScpControl\Properties\CommonInfo.cs" "$(ProjectDir)\Properties\CommonInfo.cs" &gt; nul:</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

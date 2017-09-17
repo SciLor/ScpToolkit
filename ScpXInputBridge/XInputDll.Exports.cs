@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using RGiesecke.DllExport;
-#if !EXPERIMENTAL
-using System.Threading;
-using ScpControl.Shared.Core;
-using ScpControl.Shared.Utilities;
-#endif
-using ScpControl.Shared.XInput;
+using ScpXInputBridge.XInputConstants;
+
 
 namespace ScpXInputBridge
 {
@@ -54,7 +50,7 @@ namespace ScpXInputBridge
 
             try
             {
-                ScpHidReport report = null;
+                IScpHidReportImmutable report = null;
 
                 while (dwUserIndex == 0 && (report = Proxy.GetReport(dwUserIndex)) == null)
                 {
@@ -75,71 +71,71 @@ namespace ScpXInputBridge
                     case DsModel.DS3:
                     {
                         // select & start
-                        xPad.wButtons |= (ushort) report[Ds3Button.Select].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds3Button.Start].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Select].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Start].Xbox360Button;
 
                         // d-pad
-                        xPad.wButtons |= (ushort) report[Ds3Button.Up].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds3Button.Right].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds3Button.Down].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds3Button.Left].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Up].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Right].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Down].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Left].Xbox360Button;
 
                         // shoulders
-                        xPad.wButtons |= (ushort) report[Ds3Button.L1].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds3Button.R1].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.L1].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.R1].Xbox360Button;
 
                         // face buttons
-                        xPad.wButtons |= (ushort) report[Ds3Button.Triangle].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds3Button.Circle].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds3Button.Cross].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds3Button.Square].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Triangle].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Circle].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Cross].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Square].Xbox360Button;
 
                         // PS/Guide
-                        xPad.wButtons |= (ushort) report[Ds3Button.Ps].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Ps].Xbox360Button;
 
                         // thumbs
-                        xPad.wButtons |= (ushort) report[Ds3Button.L3].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds3Button.R3].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.L3].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.R3].Xbox360Button;
 
                         // triggers
-                        xPad.bLeftTrigger = report[Ds3Axis.L2].Value;
-                        xPad.bRightTrigger = report[Ds3Axis.R2].Value;
+                        xPad.bLeftTrigger = report[DsAxis.L2].Value;
+                        xPad.bRightTrigger = report[DsAxis.R2].Value;
 
                         // thumb axes
-                        xPad.sThumbLX = (short) +DsMath.Scale(report[Ds3Axis.Lx].Value, false);
-                        xPad.sThumbLY = (short) -DsMath.Scale(report[Ds3Axis.Ly].Value, false);
-                        xPad.sThumbRX = (short) +DsMath.Scale(report[Ds3Axis.Rx].Value, false);
-                        xPad.sThumbRY = (short) -DsMath.Scale(report[Ds3Axis.Ry].Value, false);
+                        xPad.sThumbLX = (short) +DsMath.Scale(report[DsAxis.Lx].Value, false);
+                        xPad.sThumbLY = (short) -DsMath.Scale(report[DsAxis.Ly].Value, false);
+                        xPad.sThumbRX = (short) +DsMath.Scale(report[DsAxis.Rx].Value, false);
+                        xPad.sThumbRY = (short) -DsMath.Scale(report[DsAxis.Ry].Value, false);
                     }
                         break;
                     case DsModel.DS4:
                     {
                         // select & start
-                        xPad.wButtons |= (ushort) report[Ds4Button.Share].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds4Button.Options].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Share].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Options].Xbox360Button;
 
                         // d-pad
-                        xPad.wButtons |= (ushort) report[Ds4Button.Up].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds4Button.Right].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds4Button.Down].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds4Button.Left].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Up].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Right].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Down].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Left].Xbox360Button;
 
                         // shoulders
-                        xPad.wButtons |= (ushort) report[Ds4Button.L1].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds4Button.R1].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.L1].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.R1].Xbox360Button;
 
                         // face buttons
-                        xPad.wButtons |= (ushort) report[Ds4Button.Triangle].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds4Button.Circle].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds4Button.Cross].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds4Button.Square].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Triangle].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Circle].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Cross].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Square].Xbox360Button;
 
                         // PS/Guide
-                        xPad.wButtons |= (ushort) report[Ds4Button.Ps].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.Ps].Xbox360Button;
 
                         // thumbs
-                        xPad.wButtons |= (ushort) report[Ds4Button.L3].Xbox360Button;
-                        xPad.wButtons |= (ushort) report[Ds4Button.R3].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.L3].Xbox360Button;
+                        xPad.wButtons |= (ushort) report[ButtonsEnum.R3].Xbox360Button;
 
                         // triggers
                         xPad.bLeftTrigger = report[Ds4Axis.L2].Value;
@@ -218,7 +214,7 @@ namespace ScpXInputBridge
 
             try
             {
-                ScpHidReport report = Proxy.GetReport(dwUserIndex);
+                IScpHidReportImmutable report = Proxy.GetReport(dwUserIndex);
                 if (report == null || report.PadState != DsState.Connected)
                 {
                     return ResultWin32.ERROR_DEVICE_NOT_CONNECTED;
