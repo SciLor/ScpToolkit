@@ -12,7 +12,6 @@
             <ColumnDefinition Width="60" />
             <ColumnDefinition Width="180" />
             <ColumnDefinition />
-            <ColumnDefinition Width="100" />
             <ColumnDefinition Width="250" />
         </Grid.ColumnDefinitions>
 
@@ -55,15 +54,6 @@
                   Height="30"
                   ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=CurrentCommandTargetView}"
                   IsSynchronizedWithCurrentItem="True" />
-
-        <!-- Mapping enabled? -->
-        <CheckBox Grid.Column="4"
-                  ToolTip="Enable/Disable mapping"
-                  Content="Enabled"
-                  IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ButtonProfile.IsEnabled}"
-                  VerticalAlignment="Top"
-                  VerticalContentAlignment="Center"
-                  HorizontalAlignment="Left" Height="30" Margin="0,9" Width="88" />
 
         <!-- Advanced settings -->
         <Expander Grid.Column="5"
