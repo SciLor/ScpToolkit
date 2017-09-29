@@ -3,11 +3,11 @@
 namespace ScpProfiler.Views
 {
     /// <summary>
-    /// Interaction logic for GamepadStateView.xaml
+    /// Interaction logic for SourceButtonView.xaml
     /// </summary>
-    public partial class GamepadStateView : UserControl
+    public partial class SourceAxisView : UserControl
     {
-        public GamepadStateView()
+        public SourceAxisView()
         {
             InitializeComponent();
         }

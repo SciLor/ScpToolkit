@@ -23,6 +23,11 @@ namespace ScpProfiler.ViewModels
             Buttons.Add(new SourceButtonViewModel(ButtonsEnum.Triangle, _notifier));
             Buttons.Add(new SourceButtonViewModel(ButtonsEnum.Square, _notifier));
             Buttons.Add(new SourceButtonViewModel());
+            Axes.Add(new SourceAxisViewModel(AxesEnum.Circle, _notifier));
+            Axes.Add(new SourceAxisViewModel(AxesEnum.Lx, _notifier));
+            Axes.Add(new SourceAxisViewModel(AxesEnum.Ly, _notifier));
+            Axes.Add(new SourceAxisViewModel(AxesEnum.Rx, _notifier));
+            Axes.Add(new SourceAxisViewModel(AxesEnum.Ry, _notifier));
         }
 
         public GamepadStateViewModel([NotNull] IHidReportNotifier notifier)
@@ -110,9 +115,7 @@ namespace ScpProfiler.ViewModels
         private readonly Dictionary<AxesEnum, SourceAxisViewModel> _axes =
             new Dictionary<AxesEnum, SourceAxisViewModel>();
 
-        public ObservableCollection<SourceButtonViewModel> Buttons { get; } =
-            new ObservableCollection<SourceButtonViewModel>();
-
+        public ObservableCollection<SourceButtonViewModel> Buttons { get; } = new ObservableCollection<SourceButtonViewModel>();
         public ObservableCollection<SourceAxisViewModel> Axes { get; } = new ObservableCollection<SourceAxisViewModel>();
         public ObservableCollection<SourceTouchpadViewModel> Touchpads { get; } = new ObservableCollection<SourceTouchpadViewModel>();
         public ObservableCollection<SourceGyroViewModel> Gyros { get; } = new ObservableCollection<SourceGyroViewModel>();

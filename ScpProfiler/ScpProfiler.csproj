@@ -110,14 +110,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GamepadState\GamepadStateView.xaml.cs">
+      <DependentUpon>GamepadStateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamepadState\GamepadStateViewModel.cs" />
     <Compile Include="Model\DeviceUpdates.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModels\GamepadStateViewModel.cs" />
     <Compile Include="ViewModels\Gamepad\SourceGyroViewModel.cs" />
     <Compile Include="ViewModels\Gamepad\SourceMotionViewModel.cs" />
-    <Compile Include="Views\AxisMappingEntryControl.xaml.cs">
-      <DependentUpon>AxisMappingEntryControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\Gamepad\SourceAxisProfileViewModel.cs" />
     <Compile Include="ViewModels\Gamepad\SourceAxisViewModel.cs" />
     <Compile Include="ViewModels\ButtonMappingViewModel.cs" />
@@ -130,8 +130,8 @@
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\ProfileManagerViewModel.cs" />
     <Compile Include="Properties\CommonInfo.cs" />
-    <Compile Include="Views\GamepadStateView.xaml.cs">
-      <DependentUpon>GamepadStateView.xaml</DependentUpon>
+    <Compile Include="Views\SourceAxisView.xaml.cs">
+      <DependentUpon>SourceAxisView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SourceButtonView.xaml.cs">
       <DependentUpon>SourceButtonView.xaml</DependentUpon>
@@ -141,7 +141,7 @@
     </Compile>
     <Compile Include="ViewModels\Gamepad\SourceTouchpadViewModel.cs" />
     <Compile Include="ViewModels\TargetButtonViewModel.cs" />
-    <Page Include="Views\AxisMappingEntryControl.xaml">
+    <Page Include="GamepadState\GamepadStateView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -150,10 +150,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DpadAxisControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\GamepadStateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,6 +185,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\MetroDark\Theme.Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SourceAxisView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

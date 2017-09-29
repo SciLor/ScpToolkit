@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using HidReport.Contract.Enums;
-using ScpControl;
 using ScpControl.Shared.Core;
 using Xceed.Wpf.Toolkit;
-using MessageBox = Xceed.Wpf.Toolkit.MessageBox;
 
 
 namespace ScpProfiler

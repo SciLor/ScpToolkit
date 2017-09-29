@@ -9,12 +9,31 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance Type=viewModels:GamepadStateViewModel, IsDesignTimeCreatable=True}">
     <Grid>
-        <ListView 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <ListView
+            Grid.Column="0"
             Background="Transparent" 
             ItemsSource="{Binding Path=Buttons}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <local:SourceButtonView DataContext="{Binding}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ListView
+            Grid.Column="1"
+            Background="Transparent" 
+            ItemsSource="{Binding Path=Axes}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:SourceAxisView DataContext="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
