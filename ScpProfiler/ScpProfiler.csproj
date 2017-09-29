@@ -114,7 +114,7 @@
       <DependentUpon>AxisMappingEntryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AxisProfileViewModel.cs" />
-    <Compile Include="SourceAxisViewModel.cs" />
+    <Compile Include="ViewModels\SourceAxisViewModel.cs" />
     <Compile Include="ViewModels\ButtonProfileViewModel.cs" />
     <Compile Include="ViewModels\ButtonTargetsViewModel.cs" />
     <Compile Include="ViewModels\DeviceViewModel.cs" />

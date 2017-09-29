@@ -8,7 +8,12 @@
     xmlns:core="clr-namespace:ScpControl.Shared.Core;assembly=ScpControl.Shared"
     x:Class="ScpProfiler.MainWindow"
     Title="Scp Gamepad Input Profile Manager" Height="857" Width="980" WindowStartupLocation="CenterScreen"
-    Icon="xbox.ico" Initialized="Window_Initialized">
+    Icon="xbox.ico" Initialized="Window_Initialized"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    DataContext="{d:DesignInstance Type=scpProfiler:ProfileManagerViewModel, IsDesignTimeCreatable=True}"
+    >
 
     <Grid Background="#FF1B1B1B" x:Name="MainGrid">
         <Grid.RowDefinitions>
