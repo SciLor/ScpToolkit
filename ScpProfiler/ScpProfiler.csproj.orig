@@ -118,9 +118,15 @@
     <Compile Include="Views\AxisMappingEntryControl.xaml.cs">
       <DependentUpon>AxisMappingEntryControl.xaml</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="ViewModels\Gamepad\SourceAxisProfileViewModel.cs" />
     <Compile Include="ViewModels\Gamepad\SourceAxisViewModel.cs" />
     <Compile Include="ViewModels\ButtonMappingViewModel.cs" />
+=======
+    <Compile Include="ViewModels\AxisProfileViewModel.cs" />
+    <Compile Include="ViewModels\SourceAxisViewModel.cs" />
+    <Compile Include="ViewModels\ButtonProfileViewModel.cs" />
+>>>>>>> 295e2ef989d30fc95a9e7d2ed2475dff303a4319
     <Compile Include="ViewModels\ButtonTargetsViewModel.cs" />
     <Compile Include="ViewModels\DeviceViewModel.cs" />
     <Compile Include="ViewModels\Gamepad\SourceButtonViewModel.cs" />

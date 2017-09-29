@@ -1,11 +1,17 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ScpProfiler.Annotations;
 
 namespace ScpProfiler
 {
-    internal class TouchpadProfileViewModel : INotifyPropertyChanged
+    internal class SourceAxisProfileViewModel : INotifyPropertyChanged
     {
+        public SourceAxisProfileViewModel(SourceAxisViewModel sourceAxisViewModel)
+        {
+            SourceAxisViewModel = sourceAxisViewModel;
+        }
+
+        public SourceAxisViewModel SourceAxisViewModel { get; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

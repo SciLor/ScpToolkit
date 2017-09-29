@@ -4,14 +4,15 @@ using ScpControl.Shared.Core;
 
 namespace ScpProfiler
 {
-    internal class ButtonProfileViewModel : INotifyPropertyChanged
+    internal class ButtonMappingViewModel : INotifyPropertyChanged
     {
         private readonly DsButtonProfile _buttonProfile;
 
-        public ButtonProfileViewModel(DsButtonProfile buttonProfile)
+        public ButtonMappingViewModel(DsButtonProfile buttonProfile)
         {
             _buttonProfile = buttonProfile;
-            SourceButtonViewModel = new SourceButtonViewModel(buttonProfile.SourceButton);
+            //TODO: pass notifier
+            SourceButtonViewModel = new SourceButtonViewModel(buttonProfile.SourceButton, null);
             TargetButtonViewModel = new TargetButtonViewModel(buttonProfile.MappingTarget);
         }
 

@@ -1,17 +1,16 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 using ScpProfiler.Annotations;
 
-namespace ScpProfiler
+namespace ScpProfiler.ViewModels.Gamepad
 {
-    internal class AxisProfileViewModel : INotifyPropertyChanged
+    internal class SourceMotionViewModel : INotifyPropertyChanged
     {
-        public AxisProfileViewModel(SourceAxisViewModel sourceAxisViewModel)
-        {
-            SourceAxisViewModel = sourceAxisViewModel;
-        }
-
-        public SourceAxisViewModel SourceAxisViewModel { get; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

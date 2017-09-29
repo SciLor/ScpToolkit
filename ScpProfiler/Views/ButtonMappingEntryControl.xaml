@@ -8,31 +8,14 @@
              MinHeight="48" MinWidth="600" Width="886" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60" />
-            <ColumnDefinition Width="60" />
             <ColumnDefinition Width="180" />
             <ColumnDefinition />
             <ColumnDefinition Width="250" />
         </Grid.ColumnDefinitions>
 
-        <!-- Button Icon -->
-        <Image Grid.Column="0"
-               Source="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IconSource}"
-               ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IconToolTip}"
-               Width="48"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top" />
-
-        <!-- Button/Axis signal strength -->
-        <ProgressBar Grid.Column="1"
-                     ToolTip="Signal strength"
-                     VerticalAlignment="Top"
-                     HorizontalAlignment="Stretch"
-                     Height="16" Margin="5,16"
-                     Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ButtonProfile.CurrentValue}" />
 
         <!-- Type of target command -->
-        <ComboBox Grid.Column="2"
+        <ComboBox Grid.Column="0"
                   ToolTip="Target command type"
                   VerticalAlignment="Top"
                   VerticalContentAlignment="Center"
@@ -45,7 +28,7 @@
                   Height="30" />
 
         <!-- Target command -->
-        <ComboBox Grid.Column="3"
+        <ComboBox Grid.Column="1"
                   ToolTip="Action target"
                   VerticalAlignment="Top"
                   VerticalContentAlignment="Center"
@@ -56,7 +39,7 @@
                   IsSynchronizedWithCurrentItem="True" />
 
         <!-- Advanced settings -->
-        <Expander Grid.Column="5"
+        <Expander Grid.Column="2"
                   Header="Advanced"
                   IsExpanded="False"
                   Margin="5"

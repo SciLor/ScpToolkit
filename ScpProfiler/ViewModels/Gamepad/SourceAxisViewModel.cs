@@ -8,8 +8,11 @@ namespace ScpProfiler
 {
     internal class SourceAxisViewModel : INotifyPropertyChanged
     {
-        public SourceAxisViewModel(AxesEnum axis)
+        private IHidReportNotifier _notifier;
+        public SourceAxisViewModel(AxesEnum axis, IHidReportNotifier notifier)
         {
+            _notifier = notifier;
+            //TODO: subscribe to notifications
             switch (axis)
             {
                 case AxesEnum.Up:

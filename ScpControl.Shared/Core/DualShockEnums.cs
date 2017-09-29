@@ -3,16 +3,6 @@ using System.ComponentModel;
 
 namespace ScpControl.Shared.Core
 {
-    public enum DsOffset
-    {
-        Pad = 0,
-        State = 1,
-        Battery = 2,
-        Connection = 3,
-        Model = 89,
-        Address = 90
-    };
-
     public enum DsState
     {
         [Description("Disconnected")]

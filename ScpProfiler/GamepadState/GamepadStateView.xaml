@@ -1,0 +1,22 @@
+﻿<UserControl
+    x:Class="ScpProfiler.Views.GamepadStateView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ScpProfiler.Views"
+    xmlns:viewModels="clr-namespace:ScpProfiler.ViewModels"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance Type=viewModels:GamepadStateViewModel, IsDesignTimeCreatable=True}">
+    <Grid>
+        <ListView 
+            Background="Transparent" 
+            ItemsSource="{Binding Path=Buttons}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:SourceButtonView DataContext="{Binding}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>
