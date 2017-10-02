@@ -116,6 +116,7 @@
     <Compile Include="GamepadState\GamepadStateViewModel.cs" />
     <Compile Include="Model\DeviceUpdates.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Test\StubHidReportNotifier.cs" />
     <Compile Include="ViewModels\Gamepad\SourceGyroViewModel.cs" />
     <Compile Include="ViewModels\Gamepad\SourceMotionViewModel.cs" />
     <Compile Include="ViewModels\Gamepad\SourceAxisProfileViewModel.cs" />
