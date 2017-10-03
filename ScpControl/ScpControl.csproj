@@ -136,6 +136,7 @@
     <Compile Include="Driver\XOutputWrapper.cs" />
     <Compile Include="Exceptions\RootHubAlreadyStartedException.cs" />
     <Compile Include="HidParser\HidParsers.cs" />
+    <Compile Include="Profiler\FeedbackManager.cs" />
     <Compile Include="Profiler\Mapper.cs" />
     <Compile Include="Profiler\IProfileManager.cs" />
     <Compile Include="Profiler\DualShockProfileManager.cs" />
@@ -367,6 +368,10 @@
     <ProjectReference Include="..\HidReport\HidReport.csproj">
       <Project>{c39b2363-b4e8-4858-b6bb-6aa003fbaeca}</Project>
       <Name>HidReport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Profiler.Contract\Profiler.Contract.csproj">
+      <Project>{2112AC12-7918-482C-8BB1-5DC48C8E1555}</Project>
+      <Name>Profiler.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\ScpControl.Shared\ScpControl.Shared.csproj">
       <Project>{dcc3a7cd-b7f3-42f0-b1ab-c55ad82c4593}</Project>

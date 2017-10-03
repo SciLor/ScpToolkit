@@ -17,14 +17,14 @@ namespace ScpProfiler.Test
         public StubHidReportNotifier()
         {
             _cts = new CancellationTokenSource();
-            var hidReport = new HidReport.Core.HidReport()
-            {
-                BatteryStatus = DsBattery.Medium,
-            };
-            _t = Run(() => { OnHidReportReceived?.Invoke(null, hidReport); },
-                TimeSpan.FromMilliseconds(500)
-                , _cts.Token
-            );
+            //var hidReport = new HidReport.Core.HidReport()
+            //{
+            //    BatteryStatus = DsBattery.Medium,
+            //};
+            //_t = Run(() => { OnHidReportReceived?.Invoke(null, hidReport); },
+            //    TimeSpan.FromMilliseconds(500)
+            //    , _cts.Token
+            //);
         }
 
         public static async Task Run(Action action, TimeSpan period, CancellationToken cancellationToken)

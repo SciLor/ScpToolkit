@@ -7,6 +7,7 @@ using ScpControl.ScpCore;
 using ScpControl.Shared.Core;
 using ScpControl.Shared.Utilities;
 using ScpControl.Shared.XInput;
+using ScpControl.Driver;
 
 namespace ScpControl.Profiler
 {
@@ -19,7 +20,7 @@ namespace ScpControl.Profiler
         /// </summary>
         /// <param name="inputReport">The <see cref="ScpHidReport"/> to translate.</param>
         /// <returns>The translated data as <see cref="XINPUT_GAMEPAD"/> structure.</returns>
-        public XINPUT_GAMEPAD MapAxes(IScpHidReport inputReport)
+        public void MapAxes(IScpHidReport inputReport)
         {
             // trigger
             _output.bLeftTrigger = inputReport[AxesEnum.L2].Value;
@@ -50,8 +51,6 @@ namespace ScpControl.Profiler
                     (short)
                         -DsMath.Scale(inputReport[AxesEnum.Ry].Value, GlobalConfiguration.Instance.FlipRY);
             }
-
-            return Output;
         }
 
         /// <summary>
@@ -65,22 +64,23 @@ namespace ScpControl.Profiler
             if (report[button] == null) return;
 
             // turbo is special, apply first
+            bool targetState = report[button].IsPressed;
             if (profile.Turbo.IsEnabled)
             {
-                profile.Turbo.ApplyOn(report, button);
+                targetState = profile.Turbo.ApplyOn(report, button);
             }
 
             if (profile.MappingTarget is GamepadButton)
             {
                 // get target button
                 GamepadButton target = profile.MappingTarget as GamepadButton;
-                if (report[button].IsPressed) _xButton |= target.Button;
+                if (targetState) _xButton |= target.Button;
             }
             else if (profile.MappingTarget is Keystrokes)
             {
                 var target = profile.MappingTarget as Keystrokes;
 
-                if (report[button].IsPressed)
+                if (targetState)
                 {
                     VirtualInput.Keyboard.KeyDown(target.Code);
                 }
@@ -96,7 +96,7 @@ namespace ScpControl.Profiler
         /// </summary>
         /// <param name="report">The extended HID report.</param>
         /// <param name="profiles"></param>
-        public void PassThroughAllProfiles(ScpHidReport report, IEnumerable<DualShockProfile> profiles)
+        public void PassThroughAllProfiles(ScpHidReport report)
         {
             _output = new XINPUT_GAMEPAD();
             _xButton = X360Button.None;
@@ -136,11 +136,30 @@ namespace ScpControl.Profiler
             }
             MapAxes(report.HidReport);
             _output.wButtons = (ushort)_xButton;
+            _xOutputWrapper.SetState((uint) report.PadId, _output);
         }
-
-        public XINPUT_GAMEPAD Output => _output;
 
         private X360Button _xButton;
         private XINPUT_GAMEPAD _output;
+        private DualShockProfileManager _profileManager;
+        IReadOnlyList<DualShockProfile> profiles;
+        XOutputWrapper _xOutputWrapper;
+
+        public Mapper(DualShockProfileManager profileManager, XOutputWrapper xOutputWrapper)
+        {
+            _profileManager = profileManager;
+            _xOutputWrapper = xOutputWrapper;
+            if (GlobalConfiguration.Instance.ProfilesEnabled)
+            {
+                profiles = DualShockProfileManager.Instance.Profiles;
+            }
+            else
+            {
+                profiles = new List<DualShockProfile>
+                {
+                    DualShockProfile.DefaultProfile()
+                };
+            }
+        }
     }
 }

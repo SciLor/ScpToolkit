@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Windows.Input;
 using WindowsInput;
 using WindowsInput.Native;
 using HidReport.Contract.Core;
 using HidReport.Contract.Enums;
+using MouseButton = WindowsInput.MouseButton;
 
 namespace ScpControl.Shared.Core
 {
@@ -206,7 +208,7 @@ namespace ScpControl.Shared.Core
         /// </summary>
         /// <param name="report">The HID report to manipulate.</param>
         /// <param name="button">The button to trigger turbo on.</param>
-        public void ApplyOn(IScpHidReport report, ButtonsEnum button)
+        public bool ApplyOn(IScpHidReport report, ButtonsEnum button)
         {
             // if button got released...
             if (_isActive && !report[button].IsPressed)
@@ -216,17 +218,18 @@ namespace ScpControl.Shared.Core
                 _delayedFrame.Reset();
                 _engagedFrame.Reset();
                 _releasedFrame.Reset();
-                return;
+                return false;
             }
 
             // if turbo is enabled and button is pressed...
+            //TODO: seems a bug (!_isActive)
             if (!_isActive && report[button].IsPressed)
             {
                 // ...start calculating the activation delay...
                 if (!_delayedFrame.IsRunning) _delayedFrame.Restart();
 
                 // ...if we are still activating, don't do anything
-                if (_delayedFrame.ElapsedMilliseconds < Delay) return;
+                if (_delayedFrame.ElapsedMilliseconds < Delay) return true;
 
                 // time to activate!
                 _isActive = true;
@@ -238,14 +241,14 @@ namespace ScpControl.Shared.Core
             {
                 // ...restore default states and skip processing
                 _isActive = false;
-                return;
+                return false;
             }
 
             // reset engaged ("keep pressed") time frame...
             if (!_engagedFrame.IsRunning) _engagedFrame.Restart();
 
             // ...do not change state while within frame and button is still pressed, then skip
-            if (_engagedFrame.ElapsedMilliseconds < Interval && report[button].IsPressed) return;
+            if (_engagedFrame.ElapsedMilliseconds < Interval && report[button].IsPressed) return true;
 
             // reset released time frame ("forecefully release") for button
             if (!_releasedFrame.IsRunning) _releasedFrame.Restart();
@@ -254,7 +257,7 @@ namespace ScpControl.Shared.Core
             if (_releasedFrame.ElapsedMilliseconds < Release)
             {
                 // ...re-set the button state to released
-                ((HidReport.Core.HidReport) report).Unset(button);
+                return false;
             }
             else
             {
@@ -264,6 +267,7 @@ namespace ScpControl.Shared.Core
                 _delayedFrame.Stop();
                 _engagedFrame.Stop();
                 _releasedFrame.Stop();
+                return true;
             }
         }
 

@@ -20,7 +20,6 @@ using ScpControl.Properties;
 using ScpControl.Rx;
 using ScpControl.ScpCore;
 using ScpControl.Shared.Core;
-using ScpControl.Shared.XInput;
 using ScpControl.Sound;
 using ScpControl.Usb;
 using ScpControl.Usb.Ds3;
@@ -49,12 +48,6 @@ namespace ScpControl
         {
             PhysicalAddress.None, PhysicalAddress.None,
             PhysicalAddress.None, PhysicalAddress.None
-        };
-
-        private readonly byte[][] _vibration =
-        {
-            new byte[2] {0, 0}, new byte[2] {0, 0}, new byte[2] {0, 0},
-            new byte[2] {0, 0}
         };
 
         // subscribed clients who receive the native stream
@@ -230,7 +223,7 @@ namespace ScpControl
         /// <summary>
         ///     A collection of currently connected game pads.
         /// </summary>
-        public IList<IDsDevice> Pads { get; private set; }
+        public List<IDsDevice> Pads { get; }
 
         [Obsolete]
         public string Dongle
@@ -563,63 +556,29 @@ namespace ScpControl
 
         protected override void OnHidReportReceived(object sender, ScpHidReport e)
         {
-            // get current pad ID
-            var serial = (int)e.PadId;
-            Mapper mapper = new Mapper();
-            IReadOnlyList<DualShockProfile> profiles; 
-            if (GlobalConfiguration.Instance.ProfilesEnabled)
-            {
-                profiles = DualShockProfileManager.Instance.Profiles;
-            }
-            else
-            {
-                profiles = new List<DualShockProfile>
-                {
-                    DualShockProfile.DefaultProfile()
-                };
-            }
-            // pass current report through user profiles
-            mapper.PassThroughAllProfiles(e, profiles);
-            XINPUT_GAMEPAD output = mapper.Output;
+            Mapper mapper = new Mapper(DualShockProfileManager.Instance, XOutputWrapper.Instance);
+            IFeedbackManager feedbackManager = new FeedbackManager(XOutputWrapper.Instance);
 
+            // get current pad ID
+            var padId = (uint)e.PadId;
             if (e.PadState == DsState.Connected)
             {
-                // translate current report to Xbox format and send it to bus device
-                XOutputWrapper.Instance.SetState((uint) serial, output);
-                
-                // set currently assigned XInput slot
-                Pads[serial].XInputSlot = XOutputWrapper.Instance.GetRealIndex((uint) serial);
-
-                byte largeMotor = 0;
-                byte smallMotor = 0;
-
-                // forward rumble request to pad
-                if (XOutputWrapper.Instance.GetState((uint) serial, ref largeMotor, ref smallMotor) 
-                    && (largeMotor != _vibration[serial][0] || smallMotor != _vibration[serial][1]))
-                {
-                    _vibration[serial][0] = largeMotor;
-                    _vibration[serial][1] = smallMotor;
-
-                    Pads[serial].Rumble(largeMotor, smallMotor);
-                }
+                // pass current report through user profiles
+                mapper.PassThroughAllProfiles(e);
+                feedbackManager.Process(Pads[(int)padId]);
             }
-            else
+            else if (GlobalConfiguration.Instance.AlwaysUnPlugVirtualBusDevice)
             {
-                // reset rumble/vibration to off state
-                _vibration[serial][0] = _vibration[serial][1] = 0;
-                _mNative[serial][0] = _mNative[serial][1] = 0;
-
-                if (GlobalConfiguration.Instance.AlwaysUnPlugVirtualBusDevice)
-                {
-                    _scpBus.Unplug(_scpBus.IndexToSerial((byte)e.PadId));
-                }
+                _scpBus.Unplug(_scpBus.IndexToSerial((byte)e.PadId));
             }
 
             // skip broadcast if native feed is disabled
-            if (GlobalConfiguration.Instance.DisableNative)
-                return;
+            if (!GlobalConfiguration.Instance.DisableNative)
+                SendNativeControllerInputsToSubscribedClients(e);
+        }
 
-            // send native controller inputs to subscribed clients
+        private void SendNativeControllerInputsToSubscribedClients(ScpHidReport e)
+        {
             foreach (
                 var channel in _nativeFeedSubscribers.Select(nativeFeedSubscriber => nativeFeedSubscriber.Value))
             {
