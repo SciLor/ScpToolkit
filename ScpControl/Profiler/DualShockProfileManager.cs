@@ -42,8 +42,6 @@ namespace ScpControl.Profiler
             }
         }
 
-
-
         /// <summary>
         ///     Stores a new <see cref="DualShockProfile" /> or overwrites an existing one.
         /// </summary>

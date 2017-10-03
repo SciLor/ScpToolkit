@@ -8,16 +8,11 @@ using ScpControl.Shared.Core;
 using ScpControl.Shared.Utilities;
 using ScpControl.Shared.XInput;
 
-namespace ScpControl
+namespace ScpControl.Profiler
 {
     internal class Mapper
     {
         private static readonly InputSimulator VirtualInput = new InputSimulator();
-
-        public Mapper()
-        {
-            
-        }
 
         /// <summary>
         ///     Translates an <see cref="ScpHidReport"/> to an Xbox 360 compatible byte array.

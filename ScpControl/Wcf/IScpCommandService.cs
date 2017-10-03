@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using ScpControl.Profiler;
 using ScpControl.ScpCore;
 using ScpControl.Shared.Core;
 
 namespace ScpControl.Wcf
 {
     [ServiceContract]
-    public interface IScpCommandService
+    public interface IScpCommandService: IProfileManager
     {
         [OperationContract]
         bool IsNativeFeedAvailable();
@@ -28,14 +29,5 @@ namespace ScpControl.Wcf
 
         [OperationContract]
         void PromotePad(byte pad);
-
-        [OperationContract]
-        IEnumerable<DualShockProfile> GetProfiles();
-
-        [OperationContract]
-        void SubmitProfile(DualShockProfile profile);
-
-        [OperationContract]
-        void RemoveProfile(DualShockProfile profile);
     }
 }
