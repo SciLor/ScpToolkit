@@ -1,7 +1,7 @@
 ﻿using System;
 using HidReport.Contract.Core;
 
-namespace ScpProfiler
+namespace ScpProfiler.Model
 {
     interface IHidReportNotifier
     {

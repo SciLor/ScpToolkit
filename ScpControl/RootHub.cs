@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel;
 using Libarius.System;
+using Profiler.Contract;
 using ReactiveSockets;
 using ScpControl.Bluetooth;
 using ScpControl.Driver;

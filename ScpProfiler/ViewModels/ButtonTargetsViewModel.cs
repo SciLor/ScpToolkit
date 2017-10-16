@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ScpProfiler.Annotations;
+using ScpProfiler.Properties;
 
-namespace ScpProfiler
+namespace ScpProfiler.ViewModels
 {
     internal class ButtonTargetsViewModel : INotifyPropertyChanged
     {

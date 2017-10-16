@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using HidReport.Contract.Core;
 using HidReport.Contract.Enums;
-using ScpProfiler.Annotations;
+using ScpProfiler.Model;
+using ScpProfiler.Properties;
 
-namespace ScpProfiler
+namespace ScpProfiler.ViewModels.MappingSources
 {
     internal struct SourceButtonViewSettings
     {
@@ -106,19 +107,19 @@ namespace ScpProfiler
         }
     }
 
-    internal class SourceButtonViewModel : INotifyPropertyChanged
+    internal class MappingSourceViewModel : INotifyPropertyChanged
     {
         private readonly IHidReportNotifier _notifier;
         private readonly ButtonsEnum _buttonId;
 
-        public SourceButtonViewModel()
+        public MappingSourceViewModel()
             : this(ButtonsEnum.Ps, null)
         {
             Debug.Assert(LicenseManager.UsageMode == LicenseUsageMode.Designtime);
             IsPressed = true;
         }
 
-        public SourceButtonViewModel(ButtonsEnum button, [CanBeNull] IHidReportNotifier notifier)
+        public MappingSourceViewModel(ButtonsEnum button, [CanBeNull] IHidReportNotifier notifier)
         {
             _buttonId = button;
             _notifier = notifier;

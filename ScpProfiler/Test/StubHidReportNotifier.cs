@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using HidReport.Contract.Core;
 using HidReport.Contract.Enums;
+using ScpProfiler.Model;
 
 namespace ScpProfiler.Test
 {

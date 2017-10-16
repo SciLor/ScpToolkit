@@ -1,17 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ScpControl.Shared.Core;
-using ScpProfiler.Annotations;
+using ScpProfiler.Properties;
 
-namespace ScpProfiler
+namespace ScpProfiler.ViewModels.MappingSources
 {
-    internal class TargetButtonViewModel : INotifyPropertyChanged
+    internal class SourceGyroViewModel: INotifyPropertyChanged
     {
-        public TargetButtonViewModel(IMappingTarget buttonProfileMappingTarget)
-        {
-            //throw new System.NotImplementedException();
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

@@ -6,12 +6,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using HidReport.Contract.Core;
+using Profiler.Contract;
 using ScpControl;
 using ScpControl.Shared.Core;
 using ScpControl.Utilities;
-using ScpProfiler.Annotations;
+using ScpProfiler.Model;
+using ScpProfiler.Properties;
 
-namespace ScpProfiler
+namespace ScpProfiler.ViewModels
 {
     internal class ProfileManagerViewModel: IHidReportNotifier, INotifyPropertyChanged
     {

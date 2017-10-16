@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ScpProfiler.Views
+namespace ScpProfiler.GamepadState
 {
     /// <summary>
     /// Interaction logic for GamepadStateView.xaml

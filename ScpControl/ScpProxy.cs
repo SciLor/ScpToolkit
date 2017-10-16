@@ -12,6 +12,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel;
 using HidReport.Contract.Enums;
 using log4net;
+using Profiler.Contract;
 using ReactiveSockets;
 using ScpControl.Properties;
 using ScpControl.Rx;

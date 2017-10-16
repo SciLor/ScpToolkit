@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ScpProfiler.Annotations;
+using ScpProfiler.Properties;
 
-namespace ScpProfiler.ViewModels.Gamepad
+namespace ScpProfiler.ViewModels.MappingSources
 {
-    internal class SourceGyroViewModel: INotifyPropertyChanged
+    internal class SourceTouchpadViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

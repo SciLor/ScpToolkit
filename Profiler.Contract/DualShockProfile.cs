@@ -3,63 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using System.Windows.Input;
-using WindowsInput;
 using WindowsInput.Native;
 using HidReport.Contract.Core;
 using HidReport.Contract.Enums;
+using Profiler.Contract.MappingTargets;
+using ScpControl.Shared.Core;
 using MouseButton = WindowsInput.MouseButton;
 
-namespace ScpControl.Shared.Core
+namespace Profiler.Contract
 {
-    /// <summary>
-    ///     Describes a mapping target.
-    /// </summary>
-    public interface IMappingTarget
-    {
-
-        string Name { get; }
-    }
-
-    [DataContract]
-    [KnownType(typeof(GamepadButton))]
-    public class GamepadButton : IMappingTarget
-    {
-        public GamepadButton(X360Button button)
-        {
-            Button = button;
-        }
-
-        public X360Button Button { get; private set; }
-        public virtual string Name => "Gamepad buttons";
-    }
-    [DataContract]
-    [KnownType(typeof(Keystrokes))]
-    public class Keystrokes : IMappingTarget
-    {
-        public Keystrokes(VirtualKeyCode code)
-        {
-            Code = code;
-        }
-
-        public VirtualKeyCode Code { get; private set; }
-        public virtual string Name => "Keystrokes";
-
-    }
-    [DataContract]
-    [KnownType(typeof(MouseButtons))]
-    public class MouseButtons : IMappingTarget
-    {
-        public MouseButton Button { get; private set; }
-        public virtual string Name => "Mouse buttons";
-    }
-    [DataContract]
-    [KnownType(typeof(MouseAxis))]
-    public class MouseAxis : IMappingTarget
-    {
-        public virtual string Name => "Mouse axis";
-    }
-
     /// <summary>
     ///     Represents a DualShock button/axis mapping profile.
     /// </summary>
@@ -116,7 +68,7 @@ namespace ScpControl.Shared.Core
         {
         }
 
-        [DataMemberAttribute]
+        [DataMember]
         [Browsable(false)]
         public List<DsButtonProfile> Buttons { get; set; }
 

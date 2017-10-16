@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ScpControl.Shared.Core;
-using ScpProfiler.Annotations;
+using ScpProfiler.Properties;
 
-namespace ScpProfiler
+namespace ScpProfiler.ViewModels
 {
     internal class DeviceViewModel:INotifyPropertyChanged
     {

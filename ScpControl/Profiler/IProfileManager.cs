@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using Profiler.Contract;
 using ScpControl.Shared.Core;
 
 namespace ScpControl.Profiler

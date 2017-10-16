@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ScpProfiler.Annotations;
+using Profiler.Contract;
+using ScpProfiler.Properties;
 
-namespace ScpProfiler
+namespace ScpProfiler.ViewModels.MappingTargets
 {
-    internal class SourceAxisProfileViewModel : INotifyPropertyChanged
+    internal class MappingTargetViewModel : INotifyPropertyChanged
     {
-        public SourceAxisProfileViewModel(SourceAxisViewModel sourceAxisViewModel)
+        public MappingTargetViewModel(IMappingTarget buttonProfileMappingTarget)
         {
-            SourceAxisViewModel = sourceAxisViewModel;
+            //throw new System.NotImplementedException();
         }
 
-        public SourceAxisViewModel SourceAxisViewModel { get; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

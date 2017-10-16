@@ -3,6 +3,8 @@ using System.Linq;
 using WindowsInput;
 using HidReport.Contract.Core;
 using HidReport.Contract.Enums;
+using Profiler.Contract;
+using Profiler.Contract.MappingTargets;
 using ScpControl.ScpCore;
 using ScpControl.Shared.Core;
 using ScpControl.Shared.Utilities;

@@ -48,6 +48,11 @@
   <ItemGroup>
     <Compile Include="DsButtonProfile.cs" />
     <Compile Include="DualShockProfile.cs" />
+    <Compile Include="MappingTargets\GamepadButton.cs" />
+    <Compile Include="IMappingTarget.cs" />
+    <Compile Include="MappingTargets\Keystrokes.cs" />
+    <Compile Include="MappingTargets\MouseAxis.cs" />
+    <Compile Include="MappingTargets\MouseButtons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

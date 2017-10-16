@@ -1,0 +1,62 @@
+﻿<UserControl
+    x:Class="ScpProfiler.Views.MappingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewModels="clr-namespace:ScpProfiler.ViewModels"
+    xmlns:mappingTargets="clr-namespace:ScpProfiler.Views.MappingTargets"
+    xmlns:mappingSources="clr-namespace:ScpProfiler.Views.MappingSources"
+    mc:Ignorable="d"
+    MinHeight="48" MinWidth="600" Width="886"
+    d:DataContext="{d:DesignInstance Type=viewModels:MappingViewModel, IsDesignTimeCreatable=True}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="250" />
+        </Grid.ColumnDefinitions>
+
+
+        <!-- Type of target command -->
+        <ComboBox Grid.Column="0"
+                  ToolTip="Target command type"
+                  VerticalAlignment="Top"
+                  VerticalContentAlignment="Center"
+                  HorizontalAlignment="Stretch"
+                  Margin="10,9"
+                  ItemsSource="{Binding Path=MappingSources}"
+                  IsSynchronizedWithCurrentItem="True">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <mappingSources:MappingSourceView DataContext="{Binding}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <!-- Target command -->
+        <ComboBox Grid.Column="1"
+                  ToolTip="Action target"
+                  VerticalAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  HorizontalAlignment="Stretch"
+                  Margin="10,9"
+                  ItemsSource="{Binding Path=MappingTargets}"
+                  IsSynchronizedWithCurrentItem="True">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <mappingTargets:MappingTargetView DataContext="{Binding}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <!-- Advanced settings -->
+        <Expander Grid.Column="2"
+                  Header="Advanced"
+                  IsExpanded="False"
+                  Margin="5"
+                  VerticalAlignment="Top">
+            <StackPanel Margin="0,5,0,0" />
+        </Expander>
+    </Grid>
+</UserControl>

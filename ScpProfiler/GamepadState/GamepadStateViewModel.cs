@@ -5,10 +5,11 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using HidReport.Contract.Core;
 using HidReport.Contract.Enums;
-using ScpProfiler.Annotations;
-using ScpProfiler.ViewModels.Gamepad;
+using ScpProfiler.Model;
+using ScpProfiler.Properties;
+using ScpProfiler.ViewModels.MappingSources;
 
-namespace ScpProfiler.ViewModels
+namespace ScpProfiler.GamepadState
 {
     internal class GamepadStateViewModel : INotifyPropertyChanged
     {
@@ -18,11 +19,11 @@ namespace ScpProfiler.ViewModels
             :this(null)
         {
             Debug.Assert(LicenseManager.UsageMode == LicenseUsageMode.Designtime);
-            Buttons.Add(new SourceButtonViewModel(ButtonsEnum.Circle, _notifier));
-            Buttons.Add(new SourceButtonViewModel(ButtonsEnum.Cross, _notifier));
-            Buttons.Add(new SourceButtonViewModel(ButtonsEnum.Triangle, _notifier));
-            Buttons.Add(new SourceButtonViewModel(ButtonsEnum.Square, _notifier));
-            Buttons.Add(new SourceButtonViewModel());
+            Buttons.Add(new MappingSourceViewModel(ButtonsEnum.Circle, _notifier));
+            Buttons.Add(new MappingSourceViewModel(ButtonsEnum.Cross, _notifier));
+            Buttons.Add(new MappingSourceViewModel(ButtonsEnum.Triangle, _notifier));
+            Buttons.Add(new MappingSourceViewModel(ButtonsEnum.Square, _notifier));
+            Buttons.Add(new MappingSourceViewModel());
             Axes.Add(new SourceAxisViewModel(AxesEnum.Circle, _notifier));
             Axes.Add(new SourceAxisViewModel(AxesEnum.Lx, _notifier));
             Axes.Add(new SourceAxisViewModel(AxesEnum.Ly, _notifier));
@@ -91,7 +92,7 @@ namespace ScpProfiler.ViewModels
                     continue;
                 if (_buttons.ContainsKey(button))
                     continue;
-                var sourceButtonViewModel = new SourceButtonViewModel(button, _notifier);
+                var sourceButtonViewModel = new MappingSourceViewModel(button, _notifier);
                 _buttons.Add(button, sourceButtonViewModel);
                 Buttons.Add(sourceButtonViewModel);
             }
@@ -109,13 +110,13 @@ namespace ScpProfiler.ViewModels
             //TODO: add other input types
         }
 
-        private readonly Dictionary<ButtonsEnum, SourceButtonViewModel> _buttons =
-            new Dictionary<ButtonsEnum, SourceButtonViewModel>();
+        private readonly Dictionary<ButtonsEnum, MappingSourceViewModel> _buttons =
+            new Dictionary<ButtonsEnum, MappingSourceViewModel>();
 
         private readonly Dictionary<AxesEnum, SourceAxisViewModel> _axes =
             new Dictionary<AxesEnum, SourceAxisViewModel>();
 
-        public ObservableCollection<SourceButtonViewModel> Buttons { get; } = new ObservableCollection<SourceButtonViewModel>();
+        public ObservableCollection<MappingSourceViewModel> Buttons { get; } = new ObservableCollection<MappingSourceViewModel>();
         public ObservableCollection<SourceAxisViewModel> Axes { get; } = new ObservableCollection<SourceAxisViewModel>();
         public ObservableCollection<SourceTouchpadViewModel> Touchpads { get; } = new ObservableCollection<SourceTouchpadViewModel>();
         public ObservableCollection<SourceGyroViewModel> Gyros { get; } = new ObservableCollection<SourceGyroViewModel>();

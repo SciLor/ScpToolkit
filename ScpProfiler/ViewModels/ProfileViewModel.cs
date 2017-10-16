@@ -1,51 +1,72 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using HidReport.Contract.Enums;
+using Profiler.Contract;
+using Profiler.Contract.MappingTargets;
 using ScpControl.Shared.Core;
-using ScpProfiler.Annotations;
+using ScpProfiler.Properties;
+using ScpProfiler.ViewModels.MappingSources;
+using ScpProfiler.ViewModels.MappingTargets;
 
-namespace ScpProfiler
+namespace ScpProfiler.ViewModels
 {
     internal class ProfileViewModel : INotifyPropertyChanged
     {
-        private readonly DualShockProfile _model;
+        private readonly DualShockProfile _profile;
         public string Name { get; set; }
         public string Model { get; set; }
         public string DsMatch { get; set; }
         public string MacAddress { get; set; }
 
-        public ProfileViewModel(DualShockProfile model)
+        public ProfileViewModel()
         {
-            _model = model;
-            Name = model.Name;
-            Model = model.Model.ToString();
-            DsMatch = model.Match.ToString();
-            MacAddress = model.MacAddress;
-            foreach (var dsButtonProfile in model.Buttons)
+            Name = "Test";
+            Model = "DsModel.DS4";
+            MacAddress = "Test mac";
+
+            ButtonMappings = new ObservableCollection<MappingViewModel>()
+            {
+                new MappingViewModel(),
+                new MappingViewModel(),
+                new MappingViewModel(),
+                new MappingViewModel(),
+            };
+        }
+
+        public ProfileViewModel(DualShockProfile profile)
+        {
+            _profile = profile;
+            Name = profile.Name;
+            Model = profile.Model.ToString();
+            DsMatch = profile.Match.ToString();
+            MacAddress = profile.MacAddress;
+            foreach (var dsButtonProfile in profile.Buttons)
             {
                 ButtonMappings.Add(
-                    new ButtonMappingViewModel(dsButtonProfile)
+                    new MappingViewModel(dsButtonProfile)
                     );
             }
         }
 
-        public ObservableCollection<SourceButtonViewModel> AvailableSourceButtons = new ObservableCollection<SourceButtonViewModel>();
-        public ObservableCollection<TargetButtonViewModel> AvailableTargetButtons = new ObservableCollection<TargetButtonViewModel>();
+        public ObservableCollection<MappingSourceViewModel> AvailableSourceButtons = new ObservableCollection<MappingSourceViewModel>();
+        public ObservableCollection<MappingTargetViewModel> AvailableTargetButtons = new ObservableCollection<MappingTargetViewModel>();
 
-        public ObservableCollection<ButtonMappingViewModel> ButtonMappings { get; set; }
+        public ObservableCollection<MappingViewModel> ButtonMappings { get; set; }
 
         public void AddMapping()
         {
             ButtonMappings.Add(CurrentMapping);
         }
 
-        public void RemoveMapping(ButtonMappingViewModel mapping)
+        public void RemoveMapping(MappingViewModel mapping)
         {
             if (ButtonMappings.Contains(mapping))
                 ButtonMappings.Remove(mapping);
         }
 
-        public ButtonMappingViewModel CurrentMapping { get; set; }
+        public MappingViewModel CurrentMapping { get; set; }
         //public ObservableCollection<SourceAxisProfileViewModel> AxisMappings { get; set; }
         //public ObservableCollection<SourceTouchpadViewModel> TouchpadMappings { get; set; }
 

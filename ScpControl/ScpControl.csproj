@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BdRemote\BdRemoteDevice.cs" />
     <Compile Include="Bluetooth\BthDongle.Hci.cs" />
     <Compile Include="Bluetooth\BthDongle.L2cap.cs" />
     <Compile Include="Bluetooth\BthDongle.Tasks.cs" />

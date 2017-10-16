@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using HidReport.Contract.Core;
 using HidReport.Contract.Enums;
-using ScpProfiler.Annotations;
+using ScpProfiler.Model;
+using ScpProfiler.Properties;
 
-namespace ScpProfiler
+namespace ScpProfiler.ViewModels.MappingSources
 {
     internal class SourceAxisViewModel : INotifyPropertyChanged
     {

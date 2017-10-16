@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using WindowsInput;
+using Profiler.Contract;
 using ScpControl.Database;
 using ScpControl.ScpCore;
 using ScpControl.Shared.Core;

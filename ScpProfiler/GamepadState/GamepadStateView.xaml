@@ -1,13 +1,15 @@
 ﻿<UserControl
-    x:Class="ScpProfiler.Views.GamepadStateView"
+    x:Class="ScpProfiler.GamepadState.GamepadStateView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ScpProfiler.Views"
     xmlns:viewModels="clr-namespace:ScpProfiler.ViewModels"
+    xmlns:gamepadState="clr-namespace:ScpProfiler.GamepadState"
+    xmlns:mappingSources="clr-namespace:ScpProfiler.Views.MappingSources"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance Type=viewModels:GamepadStateViewModel, IsDesignTimeCreatable=True}">
+    d:DataContext="{d:DesignInstance Type=gamepadState:GamepadStateViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -22,7 +24,7 @@
             ItemsSource="{Binding Path=Buttons}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <local:SourceButtonView DataContext="{Binding}" />
+                    <mappingSources:SourceButtonView DataContext="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -33,7 +35,7 @@
             ItemsSource="{Binding Path=Axes}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <local:SourceAxisView DataContext="{Binding}" />
+                    <mappingSources:SourceAxisView DataContext="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
