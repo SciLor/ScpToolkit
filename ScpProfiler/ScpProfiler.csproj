@@ -118,10 +118,16 @@
     <Compile Include="Model\DeviceUpdates.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Test\StubHidReportNotifier.cs" />
+    <Compile Include="ViewModels\AddMappingViewModel.cs" />
     <Compile Include="ViewModels\MappingSources\SourceGyroViewModel.cs" />
     <Compile Include="ViewModels\MappingSources\SourceMotionViewModel.cs" />
     <Compile Include="ViewModels\MappingSources\SourceAxisProfileViewModel.cs" />
     <Compile Include="ViewModels\MappingSources\SourceAxisViewModel.cs" />
+    <Compile Include="ViewModels\MappingTargets\TargetGamepadAxisViewModel.cs" />
+    <Compile Include="ViewModels\MappingTargets\TargetGamepadButtonViewModel.cs" />
+    <Compile Include="ViewModels\MappingTargets\TargetKeypadViewModel.cs" />
+    <Compile Include="ViewModels\MappingTargets\TargetMouseViewModel.cs" />
+    <Compile Include="ViewModels\MappingTargets\TargetScpCommandViewModel.cs" />
     <Compile Include="ViewModels\MappingViewModel.cs" />
     <Compile Include="ViewModels\ButtonTargetsViewModel.cs" />
     <Compile Include="ViewModels\DeviceViewModel.cs" />
