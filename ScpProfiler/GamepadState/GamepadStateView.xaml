@@ -4,10 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:ScpProfiler.Views"
-    xmlns:viewModels="clr-namespace:ScpProfiler.ViewModels"
     xmlns:gamepadState="clr-namespace:ScpProfiler.GamepadState"
-    xmlns:mappingSources="clr-namespace:ScpProfiler.Views.MappingSources"
+    xmlns:mappingSources1="clr-namespace:ScpProfiler.UI.MappingSources"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance Type=gamepadState:GamepadStateViewModel, IsDesignTimeCreatable=True}">
     <Grid>
@@ -24,7 +22,7 @@
             ItemsSource="{Binding Path=Buttons}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <mappingSources:SourceButtonView DataContext="{Binding}" />
+                    <mappingSources1:SourceButtonView DataContext="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -35,7 +33,7 @@
             ItemsSource="{Binding Path=Axes}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <mappingSources:SourceAxisView DataContext="{Binding}" />
+                    <mappingSources1:SourceAxisView DataContext="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

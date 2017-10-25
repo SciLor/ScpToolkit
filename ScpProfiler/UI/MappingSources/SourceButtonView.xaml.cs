@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ScpProfiler.Views.MappingSources
+namespace ScpProfiler.UI.MappingSources
 {
     /// <summary>
     /// Interaction logic for SourceButtonView.xaml

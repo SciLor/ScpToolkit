@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Profiler.Contract;
 using ScpProfiler.Properties;
 
-namespace ScpProfiler.ViewModels.MappingTargets
+namespace ScpProfiler.UI.MappingTargets
 {
     internal class MappingTargetViewModel : INotifyPropertyChanged
     {

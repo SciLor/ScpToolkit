@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using ScpControl.Shared.Core;
 using ScpProfiler.Properties;
 
-namespace ScpProfiler.ViewModels
+namespace ScpProfiler.UI
 {
     internal class DeviceViewModel:INotifyPropertyChanged
     {

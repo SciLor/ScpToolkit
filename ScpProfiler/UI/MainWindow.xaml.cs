@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Profiler.Contract;
-using ScpProfiler.ViewModels;
 using Xceed.Wpf.Toolkit;
 
-namespace ScpProfiler.Views
+namespace ScpProfiler.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

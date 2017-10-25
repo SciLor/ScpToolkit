@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ScpProfiler.Properties;
 
-namespace ScpProfiler.ViewModels
+namespace ScpProfiler.UI
 {
-    internal class ButtonTargetsViewModel : INotifyPropertyChanged
+    internal class MappingTargetsViewModel : INotifyPropertyChanged
     {
 
         public ObservableCollection<string> Targets { get; } = new ObservableCollection<string>()

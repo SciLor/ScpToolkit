@@ -118,63 +118,63 @@
     <Compile Include="Model\DeviceUpdates.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Test\StubHidReportNotifier.cs" />
-    <Compile Include="ViewModels\AddMappingViewModel.cs" />
-    <Compile Include="ViewModels\MappingSources\SourceGyroViewModel.cs" />
-    <Compile Include="ViewModels\MappingSources\SourceMotionViewModel.cs" />
-    <Compile Include="ViewModels\MappingSources\SourceAxisProfileViewModel.cs" />
-    <Compile Include="ViewModels\MappingSources\SourceAxisViewModel.cs" />
-    <Compile Include="ViewModels\MappingTargets\TargetGamepadAxisViewModel.cs" />
-    <Compile Include="ViewModels\MappingTargets\TargetGamepadButtonViewModel.cs" />
-    <Compile Include="ViewModels\MappingTargets\TargetKeypadViewModel.cs" />
-    <Compile Include="ViewModels\MappingTargets\TargetMouseViewModel.cs" />
-    <Compile Include="ViewModels\MappingTargets\TargetScpCommandViewModel.cs" />
-    <Compile Include="ViewModels\MappingViewModel.cs" />
-    <Compile Include="ViewModels\ButtonTargetsViewModel.cs" />
-    <Compile Include="ViewModels\DeviceViewModel.cs" />
-    <Compile Include="ViewModels\MappingSources\MappingSourceViewModel.cs" />
-    <Compile Include="ViewModels\ProfileViewModel.cs" />
-    <Compile Include="ViewModels\ProfileManagerViewModel.cs" />
+    <Compile Include="UI\AddMappingViewModel.cs" />
+    <Compile Include="UI\MappingSources\SourceGyroViewModel.cs" />
+    <Compile Include="UI\MappingSources\SourceMotionViewModel.cs" />
+    <Compile Include="UI\MappingSources\SourceAxisProfileViewModel.cs" />
+    <Compile Include="UI\MappingSources\SourceAxisViewModel.cs" />
+    <Compile Include="UI\MappingTargets\TargetGamepadAxisViewModel.cs" />
+    <Compile Include="UI\MappingTargets\TargetGamepadButtonViewModel.cs" />
+    <Compile Include="UI\MappingTargets\TargetKeypadViewModel.cs" />
+    <Compile Include="UI\MappingTargets\TargetMouseViewModel.cs" />
+    <Compile Include="UI\MappingTargets\TargetScpCommandViewModel.cs" />
+    <Compile Include="UI\MappingViewModel.cs" />
+    <Compile Include="UI\ButtonTargetsViewModel.cs" />
+    <Compile Include="UI\DeviceViewModel.cs" />
+    <Compile Include="UI\MappingSources\MappingSourceViewModel.cs" />
+    <Compile Include="UI\ProfileViewModel.cs" />
+    <Compile Include="UI\ProfileManagerViewModel.cs" />
     <Compile Include="Properties\CommonInfo.cs" />
-    <Compile Include="Views\MappingSources\MappingSourceView.xaml.cs">
+    <Compile Include="UI\MappingSources\MappingSourceView.xaml.cs">
       <DependentUpon>MappingSourceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MappingTargets\MappingTargetView.xaml.cs">
+    <Compile Include="UI\MappingTargets\MappingTargetView.xaml.cs">
       <DependentUpon>MappingTargetView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProfileView.xaml.cs">
+    <Compile Include="UI\ProfileView.xaml.cs">
       <DependentUpon>ProfileView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MappingSources\SourceAxisView.xaml.cs">
+    <Compile Include="UI\MappingSources\SourceAxisView.xaml.cs">
       <DependentUpon>SourceAxisView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MappingSources\SourceButtonView.xaml.cs">
+    <Compile Include="UI\MappingSources\SourceButtonView.xaml.cs">
       <DependentUpon>SourceButtonView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\MappingSources\SourceTouchpadViewModel.cs" />
-    <Compile Include="ViewModels\MappingTargets\MappingTargetViewModel.cs" />
-    <Compile Include="Views\MappingTargets\XboxButtonView.xaml.cs">
+    <Compile Include="UI\MappingSources\SourceTouchpadViewModel.cs" />
+    <Compile Include="UI\MappingTargets\MappingTargetViewModel.cs" />
+    <Compile Include="UI\MappingTargets\XboxButtonView.xaml.cs">
       <DependentUpon>XboxButtonView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TurboConfig.xaml.cs">
+    <Compile Include="UI\TurboConfig.xaml.cs">
       <DependentUpon>TurboConfig.xaml</DependentUpon>
     </Compile>
     <Page Include="GamepadState\GamepadStateView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MappingSources\MappingSourceView.xaml">
+    <Page Include="UI\MappingSources\MappingSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MappingTargets\MappingTargetView.xaml">
+    <Page Include="UI\MappingTargets\MappingTargetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MappingView.xaml">
+    <Page Include="UI\MappingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -182,10 +182,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\MappingView.xaml.cs">
+    <Compile Include="UI\MappingView.xaml.cs">
       <DependentUpon>MappingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainWindow.xaml.cs">
+    <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -209,23 +209,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ProfileView.xaml">
+    <Page Include="UI\ProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MappingSources\SourceAxisView.xaml">
+    <Page Include="UI\MappingSources\SourceAxisView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MappingSources\SourceButtonView.xaml">
+    <Page Include="UI\MappingSources\SourceButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MappingTargets\XboxButtonView.xaml">
+    <Page Include="UI\MappingTargets\XboxButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TurboConfig.xaml">
+    <Page Include="UI\TurboConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,12 +1,12 @@
 ﻿<UserControl
-    x:Class="ScpProfiler.Views.MappingSources.SourceButtonView"
+    x:Class="ScpProfiler.UI.MappingSources.SourceButtonView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:scpProfiler="clr-namespace:ScpProfiler"
+    xmlns:mappingSources="clr-namespace:ScpProfiler.UI.MappingSources"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance Type=gamepad:MappingSourceViewModel, IsDesignTimeCreatable=True}">
+    d:DataContext="{d:DesignInstance Type=mappingSources:MappingSourceViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60" />

@@ -4,16 +4,15 @@
     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:core="clr-namespace:ScpControl.Shared.Core;assembly=ScpControl.Shared"
-    x:Class="ScpProfiler.Views.MainWindow"
+    x:Class="ScpProfiler.UI.MainWindow"
     Title="Scp Gamepad Input Profile Manager" Height="857" Width="980" WindowStartupLocation="CenterScreen"
     Icon="xbox.ico" 
     Initialized="Window_Initialized"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:views="clr-namespace:ScpProfiler.Views"
-    xmlns:viewModels="clr-namespace:ScpProfiler.ViewModels"
-    d:DataContext="{d:DesignInstance Type=viewModels:ProfileManagerViewModel, IsDesignTimeCreatable=True}"
+    xmlns:ui="clr-namespace:ScpProfiler.UI"
+    d:DataContext="{d:DesignInstance Type=ui:ProfileManagerViewModel, IsDesignTimeCreatable=True}"
     >
 
     <Grid Background="#FF1B1B1B" x:Name="MainGrid">
@@ -59,7 +58,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
-                                        <views:MappingView></views:MappingView>
+                                        <ui:MappingView></ui:MappingView>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

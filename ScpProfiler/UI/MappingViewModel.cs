@@ -5,10 +5,10 @@ using HidReport.Contract.Enums;
 using Profiler.Contract;
 using Profiler.Contract.MappingTargets;
 using ScpControl.Shared.Core;
-using ScpProfiler.ViewModels.MappingSources;
-using ScpProfiler.ViewModels.MappingTargets;
+using ScpProfiler.UI.MappingSources;
+using ScpProfiler.UI.MappingTargets;
 
-namespace ScpProfiler.ViewModels
+namespace ScpProfiler.UI
 {
     internal class MappingViewModel : INotifyPropertyChanged
     {

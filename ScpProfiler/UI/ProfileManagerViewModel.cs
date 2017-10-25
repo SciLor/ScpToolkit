@@ -13,7 +13,7 @@ using ScpControl.Utilities;
 using ScpProfiler.Model;
 using ScpProfiler.Properties;
 
-namespace ScpProfiler.ViewModels
+namespace ScpProfiler.UI
 {
     internal class ProfileManagerViewModel: IHidReportNotifier, INotifyPropertyChanged
     {

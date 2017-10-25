@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using HidReport.Contract.Enums;
 using Profiler.Contract;
-using Profiler.Contract.MappingTargets;
-using ScpControl.Shared.Core;
 using ScpProfiler.Properties;
-using ScpProfiler.ViewModels.MappingSources;
-using ScpProfiler.ViewModels.MappingTargets;
+using ScpProfiler.UI.MappingSources;
+using ScpProfiler.UI.MappingTargets;
 
-namespace ScpProfiler.ViewModels
+namespace ScpProfiler.UI
 {
     internal class ProfileViewModel : INotifyPropertyChanged
     {
@@ -50,8 +46,8 @@ namespace ScpProfiler.ViewModels
             }
         }
 
-        public ObservableCollection<MappingSourceViewModel> AvailableSourceButtons = new ObservableCollection<MappingSourceViewModel>();
-        public ObservableCollection<MappingTargetViewModel> AvailableTargetButtons = new ObservableCollection<MappingTargetViewModel>();
+        public ObservableCollection<SourceButtonViewModel> AvailableSourceButtons = new ObservableCollection<SourceButtonViewModel>();
+        public ObservableCollection<MappingTargetViewModelBase> AvailableTargetButtons = new ObservableCollection<MappingTargetViewModelBase>();
 
         public ObservableCollection<MappingViewModel> ButtonMappings { get; set; }
 

@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using ScpProfiler.Properties;
 
-namespace ScpProfiler.ViewModels.MappingSources
+namespace ScpProfiler.UI.MappingSources
 {
     internal class SourceMotionViewModel : INotifyPropertyChanged
     {

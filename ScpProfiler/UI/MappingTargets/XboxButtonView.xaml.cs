@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ScpProfiler.Views.MappingTargets
+namespace ScpProfiler.UI.MappingTargets
 {
     /// <summary>
     /// Interaction logic for XboxButtonView.xaml

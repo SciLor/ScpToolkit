@@ -7,7 +7,7 @@ using HidReport.Contract.Enums;
 using ScpProfiler.Model;
 using ScpProfiler.Properties;
 
-namespace ScpProfiler.ViewModels.MappingSources
+namespace ScpProfiler.UI.MappingSources
 {
     internal struct SourceButtonViewSettings
     {
